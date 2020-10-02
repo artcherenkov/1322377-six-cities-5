@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import Main from "../main/main.jsx";
+import MainScreen from "../main-screen/main-screen.jsx";
 
-const App = ({offersCount}) => <Main offersCount = {offersCount} />;
+const App = ({offersCount}) => <MainScreen offersCount = {offersCount} />;
 
 App.propTypes = {
   offersCount: PropTypes.number

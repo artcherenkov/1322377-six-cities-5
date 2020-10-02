@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-const Main = ({offersCount}) => (
+const MainScreen = ({offersCount}) => (
   <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
@@ -261,8 +261,8 @@ const Main = ({offersCount}) => (
   </div>
 );
 
-Main.propTypes = {
+MainScreen.propTypes = {
   offersCount: PropTypes.number
 };
 
-export default Main;
+export default MainScreen;
