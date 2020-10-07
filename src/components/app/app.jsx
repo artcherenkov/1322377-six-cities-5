@@ -6,11 +6,11 @@ import FavoritesScreen from "../favorites-screen/favorites-screen.jsx";
 import LoginScreen from "../login-screen/login-screen.jsx";
 import OfferScreen from "../offer-screen/offer-screen.jsx";
 
-const App = ({offersCount}) => (
+const App = ({offers}) => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/">
-        <MainScreen errorsCount={offersCount}/>
+        <MainScreen offers={offers}/>
       </Route>
       <Route exact path="/login">
         <LoginScreen/>
@@ -26,7 +26,14 @@ const App = ({offersCount}) => (
 );
 
 App.propTypes = {
-  offersCount: PropTypes.number
+  offers: PropTypes.arrayOf(PropTypes.shape({
+    picture: PropTypes.string,
+    isPremium: PropTypes.bool,
+    costPerNight: PropTypes.number,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    rating: PropTypes.number
+  }))
 };
 
 export default App;

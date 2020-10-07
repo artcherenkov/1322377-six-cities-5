@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from "./components/app/app.jsx";
-import {getRandomInteger} from "./utils.js";
+import {generateOffers} from "./mock/offers.js";
 
-const Settings = {
-  OFFERS_COUNT: getRandomInteger(0, 300),
-};
+const mockOffers = generateOffers();
 
 ReactDOM.render(
-    <App offersCount = {Settings.OFFERS_COUNT} />,
+    <App offers={mockOffers}/>,
     document.querySelector(`#root`)
 );
