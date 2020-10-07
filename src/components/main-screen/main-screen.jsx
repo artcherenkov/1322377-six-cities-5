@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import OffersList from "../offers-list/offers-list.jsx";
+import {Shapes} from "../../utils/shapes.js";
 
 const MainScreen = ({offers}) => (
   <div className="page page--gray page--main">
@@ -98,14 +99,7 @@ const MainScreen = ({offers}) => (
 );
 
 MainScreen.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    picture: PropTypes.string,
-    isPremium: PropTypes.bool,
-    costPerNight: PropTypes.number,
-    title: PropTypes.string,
-    type: PropTypes.string,
-    rating: PropTypes.number
-  }))
+  offers: PropTypes.arrayOf(PropTypes.shape(Shapes.offer))
 };
 
 export default MainScreen;

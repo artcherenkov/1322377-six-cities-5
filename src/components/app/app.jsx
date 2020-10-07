@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {BrowserRouter, Switch, Route} from "react-router-dom";
+
 import MainScreen from "../main-screen/main-screen.jsx";
 import FavoritesScreen from "../favorites-screen/favorites-screen.jsx";
 import LoginScreen from "../login-screen/login-screen.jsx";
 import OfferScreen from "../offer-screen/offer-screen.jsx";
+import {Shapes} from "../../utils/shapes.js";
 
 const App = ({offers}) => (
   <BrowserRouter>
@@ -26,14 +28,7 @@ const App = ({offers}) => (
 );
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    picture: PropTypes.string,
-    isPremium: PropTypes.bool,
-    costPerNight: PropTypes.number,
-    title: PropTypes.string,
-    type: PropTypes.string,
-    rating: PropTypes.number
-  }))
+  offers: PropTypes.arrayOf(PropTypes.shape(Shapes.offer))
 };
 
 export default App;

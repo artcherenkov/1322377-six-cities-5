@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {toCamelCase} from "../../utils.js";
+
+import {toCamelCase} from "../../utils/common.js";
+import {Shapes} from "../../utils/shapes.js";
 
 export default class OfferCard extends React.PureComponent {
   constructor(props) {
@@ -58,13 +60,6 @@ export default class OfferCard extends React.PureComponent {
 }
 
 OfferCard.propTypes = {
-  offer: PropTypes.shape({
-    picture: PropTypes.string,
-    isPremium: PropTypes.bool,
-    costPerNight: PropTypes.number,
-    title: PropTypes.string,
-    type: PropTypes.string,
-    rating: PropTypes.number
-  }),
+  offer: PropTypes.shape(Shapes.offer),
   onCardHover: PropTypes.func.isRequired
 };

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import OfferCard from "../offer-card/offer-card.jsx";
 import {nanoid} from "nanoid";
+
+import OfferCard from "../offer-card/offer-card.jsx";
+import {Shapes} from "../../utils/shapes.js";
 
 export default class OffersList extends React.PureComponent {
   constructor(props) {
@@ -30,12 +32,5 @@ export default class OffersList extends React.PureComponent {
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    picture: PropTypes.string,
-    isPremium: PropTypes.bool,
-    costPerNight: PropTypes.number,
-    title: PropTypes.string,
-    type: PropTypes.string,
-    rating: PropTypes.number
-  }))
+  offers: PropTypes.arrayOf(PropTypes.shape(Shapes.offer))
 };
