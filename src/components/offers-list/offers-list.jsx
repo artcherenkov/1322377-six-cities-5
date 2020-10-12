@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {nanoid} from "nanoid";
 
 import OfferCard from "../offer-card/offer-card.jsx";
 import {Shapes} from "../../utils/shapes.js";
@@ -21,7 +20,7 @@ export default class OffersList extends React.PureComponent {
     const offers = this.props.offers;
     const offerCards = [];
     for (let offer of offers) {
-      offerCards.push(<OfferCard offer={offer} key={nanoid(3)} onCardHover={this.handleCardHover}/>);
+      offerCards.push(<OfferCard offer={offer} key={offer.id} onCardHover={this.handleCardHover}/>);
     }
     return (
       <div className="cities__places-list places__list tabs__content">
