@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {toCamelCase} from "../../utils/common.js";
 import {Shapes} from "../../utils/shapes.js";
+import {Link} from "react-router-dom";
 
 export default class OfferCard extends React.PureComponent {
   constructor(props) {
@@ -16,19 +17,23 @@ export default class OfferCard extends React.PureComponent {
   }
 
   render() {
-    const {picture, isPremium, costPerNight, title, type, rating} = this.props.offer;
+    const {pictures, isPremium, costPerNight, title, type, rating, id} = this.props.offer;
 
     return (
-      <article className="cities__place-card place-card" onMouseOver={this.handleHover}>
+      <article className="cities__place-card place-card" onMouseEnter={this.handleHover}>
         {isPremium
           ? <div className="place-card__mark">
             <span>Premium</span>
           </div>
           : ``}
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <a href="#">
-            <img className="place-card__image" src={picture} width="260" height="200" alt="Place image" />
-          </a>
+          // todo обратить внимание
+          <Link to={{
+            pathname: `/offer/${id}`,
+            state: {offer: this.props.offer}
+          }} >
+            <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image" />
+          </Link>
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
