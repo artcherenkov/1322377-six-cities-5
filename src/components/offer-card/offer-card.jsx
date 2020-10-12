@@ -27,7 +27,7 @@ export default class OfferCard extends React.PureComponent {
           </div>
           : ``}
         <div className="cities__image-wrapper place-card__image-wrapper">
-          // todo обратить внимание
+          {/* todo обратить внимание*/}
           <Link to={{
             pathname: `/offer/${id}`,
             state: {offer: this.props.offer}
