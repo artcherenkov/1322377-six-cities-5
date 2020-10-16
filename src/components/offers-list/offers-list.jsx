@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import OfferCard from "../offer-card/offer-card.jsx";
-import {Shapes} from "../../utils/shapes.js";
+import OfferCardProp from '../offer-card/offer-card.prop';
 
 export default class OffersList extends React.PureComponent {
   constructor(props) {
@@ -31,5 +31,5 @@ export default class OffersList extends React.PureComponent {
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(Shapes.offer))
+  offers: PropTypes.arrayOf(OfferCardProp)
 };

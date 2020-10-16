@@ -6,7 +6,7 @@ import MainScreen from "../main-screen/main-screen.jsx";
 import FavoritesScreen from "../favorites-screen/favorites-screen.jsx";
 import LoginScreen from "../login-screen/login-screen.jsx";
 import OfferScreen from "../offer-screen/offer-screen.jsx";
-import {Shapes} from "../../utils/shapes.js";
+import OfferCardProp from '../offer-card/offer-card.prop';
 
 const App = ({offers}) => (
   <BrowserRouter>
@@ -27,7 +27,7 @@ const App = ({offers}) => (
 );
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(Shapes.offer))
+  offers: PropTypes.arrayOf(OfferCardProp)
 };
 
 export default App;

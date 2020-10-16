@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 import OffersList from "../offers-list/offers-list.jsx";
-import {Shapes} from "../../utils/shapes.js";
+import Map from "../map/map";
+import OfferCardProp from '../offer-card/offer-card.prop';
 
 const MainScreen = ({offers}) => (
   <div className="page page--gray page--main">
@@ -90,7 +91,7 @@ const MainScreen = ({offers}) => (
             <OffersList offers={offers} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"/>
+            <Map offers={offers} />
           </div>
         </div>
       </div>
@@ -99,7 +100,7 @@ const MainScreen = ({offers}) => (
 );
 
 MainScreen.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape(Shapes.offer))
+  offers: PropTypes.arrayOf(OfferCardProp)
 };
 
 export default MainScreen;

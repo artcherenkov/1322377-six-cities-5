@@ -18,6 +18,13 @@ const TITLES = [
   `Hyde Park Duplex in 1860’s Georgian Townhouse`
 ];
 
+const COORDINATES = [
+  [52.3909553943508, 4.85309666406198],
+  [52.369553943508, 4.85309666406198],
+  [52.3909553943508, 4.929309666406198],
+  [52.3809553943508, 4.939309666406198]
+];
+
 const OFFERS_COUNT = 10;
 const PICTURES_COUNT = 6;
 
@@ -44,7 +51,8 @@ export const generateOffers = (offersCount = OFFERS_COUNT) => {
       title: TITLES[getRandomInteger(0, TITLES.length - 1)],
       type: getRandomType(),
       rating: getRandomInteger(10, 50) / 10, // от 1 до 5
-      id: nanoid()
+      id: nanoid(),
+      coords: COORDINATES[i] ? COORDINATES[i] : null
     });
   }
 
