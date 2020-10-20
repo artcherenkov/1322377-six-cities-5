@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import OffersList from "../offers-list/offers-list.jsx";
 import Map from "../map/map";
 import OfferCardProp from '../offer-card/offer-card.prop';
+import {MapType, OffersListType} from "../../const";
 
 const MainScreen = ({offers}) => (
   <div className="page page--gray page--main">
@@ -88,10 +89,10 @@ const MainScreen = ({offers}) => (
                 <li className="places__option" tabIndex="0">Top rated first</li>
               </ul>
             </form>
-            <OffersList offers={offers} />
+            <OffersList offers={offers} offersListType={OffersListType.CITIES}/>
           </section>
           <div className="cities__right-section">
-            <Map offers={offers} />
+            <Map offers={offers} cardType={MapType.CITIES}/>
           </div>
         </div>
       </div>

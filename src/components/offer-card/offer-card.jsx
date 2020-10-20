@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {toCamelCase} from "../../utils/common.js";
-import {Shapes} from "../../utils/shapes.js";
 import {Link} from "react-router-dom";
+import OfferCardProp from "./offer-card.prop";
 
 export default class OfferCard extends React.PureComponent {
   constructor(props) {
@@ -30,7 +30,10 @@ export default class OfferCard extends React.PureComponent {
           {/* todo обратить внимание*/}
           <Link to={{
             pathname: `/offer/${id}`,
-            state: {offer: this.props.offer}
+            state: {
+              offer: this.props.offer,
+              offers: this.props.offers
+            }
           }} >
             <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image" />
           </Link>
@@ -65,6 +68,7 @@ export default class OfferCard extends React.PureComponent {
 }
 
 OfferCard.propTypes = {
-  offer: PropTypes.shape(Shapes.offer),
+  offer: OfferCardProp,
+  offers: PropTypes.arrayOf(OfferCardProp),
   onCardHover: PropTypes.func.isRequired
 };
