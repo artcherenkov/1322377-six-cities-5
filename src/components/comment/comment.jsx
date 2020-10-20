@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 
+import CommentProp from '../comment/comment.prop';
+
 const Comment = (props) => {
   const {comment} = props;
   const date = moment(comment.date);
@@ -28,3 +30,7 @@ const Comment = (props) => {
 };
 
 export default Comment;
+
+Comment.propTypes = {
+  comment: CommentProp
+};
