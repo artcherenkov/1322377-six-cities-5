@@ -1,11 +1,11 @@
 import {nanoid} from "nanoid";
+import {LoremIpsum} from "lorem-ipsum";
 
 import {getRandomInteger} from "../utils/common.js";
 import {HousingType} from "../const.js";
-import {LoremIpsum} from "lorem-ipsum";
 import {randomDate} from "../utils/common";
-const AVATAR_URL = `https://api.adorable.io/avatars/128`;
 
+const AVATAR_URL = `https://api.adorable.io/avatars/128`;
 
 const TITLES = [
   `Beautiful & luxurious apartment at great location`,
@@ -64,7 +64,8 @@ export const generateOffers = (offersCount = OFFERS_COUNT) => {
         avatar: `${AVATAR_URL}/${Math.random()}`,
         rating: getRandomInteger(10, 50) / 10, // от 1 до 5
         date: randomDate(),
-        content: lorem.generateSentences(2)
+        content: lorem.generateSentences(2),
+        id: nanoid()
       }))
     });
   }
