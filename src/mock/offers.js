@@ -2,6 +2,10 @@ import {nanoid} from "nanoid";
 
 import {getRandomInteger} from "../utils/common.js";
 import {HousingType} from "../const.js";
+import {LoremIpsum} from "lorem-ipsum";
+import {randomDate} from "../utils/common";
+const AVATAR_URL = `https://api.adorable.io/avatars/128`;
+
 
 const TITLES = [
   `Beautiful & luxurious apartment at great location`,
@@ -43,6 +47,8 @@ const getPictures = () => {
 
 export const generateOffers = (offersCount = OFFERS_COUNT) => {
   const offers = [];
+  const lorem = new LoremIpsum();
+
   for (let i = 0; i < offersCount; i++) {
     offers.push({
       pictures: getPictures(),
@@ -52,7 +58,14 @@ export const generateOffers = (offersCount = OFFERS_COUNT) => {
       type: getRandomType(),
       rating: getRandomInteger(10, 50) / 10, // от 1 до 5
       id: nanoid(),
-      coords: COORDINATES[i] ? COORDINATES[i] : null
+      coords: COORDINATES[i] ? COORDINATES[i] : null,
+      comments: Array(getRandomInteger(1, 5)).fill({}).map(() => ({
+        name: `Max`,
+        avatar: `${AVATAR_URL}/${Math.random()}`,
+        rating: getRandomInteger(10, 50) / 10, // от 1 до 5
+        date: randomDate(),
+        content: lorem.generateSentences(2)
+      }))
     });
   }
 
