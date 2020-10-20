@@ -13,15 +13,18 @@ export default class OfferScreen extends React.PureComponent {
     super(props);
 
     // todo как валидировать через проп тайпсы?
-    this._offer = props.location.state.offer;
     this._offers = props.location.state.offers;
+  }
 
-    // оставляем только офферы с координатами без текущего, на странице которого находимся
-    this._offers = this._offers.filter((offer) => offer.coords && offer !== this._offer);
+  componentDidUpdate() {
+    window.scrollTo(0, 0);
   }
 
   render() {
-    const {pictures, isPremium, costPerNight, title, type, rating} = this._offer;
+    const offer = this._offers.find((_offer) => _offer.id === this.props.match.params.id);
+    const offers = this._offers.filter((_offer) => _offer.coords && _offer !== offer);
+    const {pictures, isPremium, costPerNight, title, type, rating} = offer;
+
     return (
       <div className="page">
         <header className="header">
@@ -154,19 +157,19 @@ export default class OfferScreen extends React.PureComponent {
                 </div>
                 <section className="property__reviews reviews">
                   <h2 className="reviews__title">Reviews &middot;
-                    <span className="reviews__amount">{this._offer.comments.length}</span>
+                    <span className="reviews__amount">{offer.comments.length}</span>
                   </h2>
-                  <CommentsList comments={this._offer.comments} />
+                  <CommentsList comments={offer.comments} />
                   <CommentForm />
                 </section>
               </div>
             </div>
-            <Map offers={this._offers} cardType={MapType.PROPERTY} />
+            <Map offers={offers} cardType={MapType.PROPERTY} />
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <OffersList offers={this._offers} offersListType={OffersListType.NEAR} />
+              <OffersList offers={offers} offersListType={OffersListType.NEAR} />
             </section>
           </div>
         </main>
