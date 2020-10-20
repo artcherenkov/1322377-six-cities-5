@@ -54,10 +54,11 @@ export default class Map extends React.PureComponent {
   }
 
   render() {
-    return <section className="cities__map map" id="map"/>;
+    return <section className={this.props.cardType + ` map`} id="map"/>;
   }
 }
 
 Map.propTypes = {
-  offers: PropTypes.arrayOf(OfferCardProp)
+  offers: PropTypes.arrayOf(OfferCardProp),
+  cardType: PropTypes.string
 };

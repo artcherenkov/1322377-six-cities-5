@@ -20,10 +20,10 @@ export default class OffersList extends React.PureComponent {
     const offers = this.props.offers;
     const offerCards = [];
     for (let offer of offers) {
-      offerCards.push(<OfferCard offer={offer} key={offer.id} onCardHover={this.handleCardHover}/>);
+      offerCards.push(<OfferCard offer={offer} offers={offers} key={offer.id} onCardHover={this.handleCardHover}/>);
     }
     return (
-      <div className="cities__places-list places__list tabs__content">
+      <div className={this.props.offersListType + ` places__list`}>
         {offerCards}
       </div>
     );
@@ -31,5 +31,6 @@ export default class OffersList extends React.PureComponent {
 }
 
 OffersList.propTypes = {
-  offers: PropTypes.arrayOf(OfferCardProp)
+  offers: PropTypes.arrayOf(OfferCardProp),
+  offersListType: PropTypes.string
 };
