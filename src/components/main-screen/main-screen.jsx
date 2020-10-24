@@ -9,9 +9,10 @@ import OfferCardProp from '../offer-card/offer-card.prop';
 import {MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
+import Sort from "../sort/sort";
 
 const MainScreen = (props) => {
-  const {city, cityOffers, onCityChange} = props;
+  const {city, cityOffers, sortType, onCityChange, onSortTypeChange} = props;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -45,22 +46,8 @@ const MainScreen = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{cityOffers.length} places to stay in {toCamelCase(city)}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"/>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-              </form>
-              <OffersList offers={cityOffers} offersListType={OffersListType.CITIES}/>
+              <Sort currentSortType={sortType} onSortTypeChange={onSortTypeChange} />
+              <OffersList offers={cityOffers} offersListType={OffersListType.CITIES} sortType={sortType} />
             </section>
             <div className="cities__right-section">
               <Map offers={cityOffers} cardType={MapType.CITIES} />
@@ -76,19 +63,26 @@ MainScreen.propTypes = {
   offers: PropTypes.arrayOf(OfferCardProp).isRequired,
   cityOffers: PropTypes.arrayOf(OfferCardProp).isRequired,
   city: PropTypes.string.isRequired,
-  onCityChange: PropTypes.func.isRequired
+  onCityChange: PropTypes.func.isRequired,
+  onSortTypeChange: PropTypes.func.isRequired,
+  sortType: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers,
-  cityOffers: state.cityOffers
+  cityOffers: state.cityOffers,
+  sortType: state.sortType,
+  activeOffer: state.activeOffer
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityChange(newCity) {
     dispatch(ActionCreator.changeCity(newCity));
     dispatch(ActionCreator.getCityOffers());
+  },
+  onSortTypeChange(newSortType) {
+    dispatch(ActionCreator.changeSortType(newSortType));
   }
 });
 
