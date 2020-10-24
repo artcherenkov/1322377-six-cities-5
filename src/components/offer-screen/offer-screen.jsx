@@ -24,7 +24,7 @@ export default class OfferScreen extends React.PureComponent {
 
   render() {
     const offer = this._offers.find((_offer) => _offer.id === this.props.match.params.id);
-    const offers = this._offers.filter((_offer) => _offer.coords && _offer !== offer);
+    const offers = this._offers;
     const {pictures, isPremium, costPerNight, title, type, rating} = offer;
 
     return (
