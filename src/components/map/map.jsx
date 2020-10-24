@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import * as leaflet from 'leaflet';
 
 import OfferCardProp from '../offer-card/offer-card.prop';
+import {connect} from "react-redux";
 
 const ICON = leaflet.icon({
   iconUrl: `img/pin.svg`,
   iconSize: [30, 30]
 });
 
-export default class Map extends React.PureComponent {
+const ACTIVE_ICON = leaflet.icon({
+  iconUrl: `img/pin-active.svg`,
+  iconSize: [30, 30]
+});
+
+class Map extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -33,39 +39,51 @@ export default class Map extends React.PureComponent {
       .addTo(this.map);
   }
 
+  resetPins() {
+    this.markers.map((marker) => {
+      marker.remove();
+    });
+  }
+
   setPin(coords) {
     const marker = leaflet.marker(coords, {icon: ICON});
     this.markers.push(marker);
     marker.addTo(this.map);
   }
 
-  componentDidUpdate() {
-    const {offers} = this.props;
+  setActivePin(coords) {
+    const marker = leaflet.marker(coords, {icon: ACTIVE_ICON});
+    this.markers.push(marker);
+    marker.addTo(this.map);
+  }
 
-    this.markers.map((marker) => {
-      marker.remove();
-    });
-
+  setPins(offers, activeOfferId) {
     offers.map((offer) => {
       if (offer.coords) {
-        this.setPin(offer.coords);
+        if (offer.id === activeOfferId) {
+          this.setActivePin(offer.coords);
+        } else {
+          this.setPin(offer.coords);
+        }
       }
     });
   }
 
+  componentDidUpdate() {
+    const {offers, activeOfferId} = this.props;
+
+    this.resetPins();
+    this.setPins(offers, activeOfferId);
+  }
+
   componentDidMount() {
-    const {offers} = this.props;
+    const {offers, activeOfferId} = this.props;
 
     const city = [52.38333, 4.9];
     const zoom = 12;
 
     this.initMap(city, zoom);
-
-    offers.map((offer) => {
-      if (offer.coords) {
-        this.setPin(offer.coords);
-      }
-    });
+    this.setPins(offers, activeOfferId);
   }
 
   render() {
@@ -74,6 +92,14 @@ export default class Map extends React.PureComponent {
 }
 
 Map.propTypes = {
-  offers: PropTypes.arrayOf(OfferCardProp),
-  cardType: PropTypes.string
+  offers: PropTypes.arrayOf(OfferCardProp).isRequired,
+  cardType: PropTypes.string.isRequired,
+  activeOfferId: PropTypes.string.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  activeOfferId: state.activeOfferId
+});
+
+export {Map};
+export default connect(mapStateToProps)(Map);
