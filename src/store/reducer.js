@@ -4,7 +4,7 @@ import {ActionType} from "./action";
 
 const initialState = {
   city: Cities.AMSTERDAM,
-  offersList: []
+  offers: []
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
 
     case ActionType.GET_OFFERS_LIST:
       return extend(state, {
-        offersList: action.payload
+        offers: action.payload
       });
   }
 
