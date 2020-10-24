@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from "react-router-dom";
 import {nanoid} from "nanoid";
+
 import {toCamelCase} from "../../utils/common.js";
 import CommentForm from "../comment-form/comment-form.jsx";
 import CommentsList from "../comment-list/comments-list";
@@ -177,3 +179,8 @@ export default class OfferScreen extends React.PureComponent {
     );
   }
 }
+
+OfferScreen.propTypes = {
+  location: PropTypes.any,
+  match: PropTypes.any
+};
