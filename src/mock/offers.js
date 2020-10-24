@@ -38,38 +38,31 @@ const getRandomType = () => {
 };
 
 const getPictures = () => {
-  let pictures = [];
-  for (let i = 0; i < PICTURES_COUNT; i++) {
-    pictures.push(`http://picsum.photos/248/152?r=${Math.random()}`);
-  }
-  return pictures;
+  return Array(PICTURES_COUNT).fill([]).map(() => (
+    `http://picsum.photos/248/152?r=${Math.random()}`
+  ));
 };
 
 export const generateOffers = (offersCount = OFFERS_COUNT) => {
-  const offers = [];
   const lorem = new LoremIpsum();
 
-  for (let i = 0; i < offersCount; i++) {
-    offers.push({
-      city: Object.values(Cities)[getRandomInteger(0, Object.values(Cities).length - 1)],
-      pictures: getPictures(),
-      isPremium: Boolean(getRandomInteger()),
-      costPerNight: getRandomInteger(10, 400) * 10, // кратно десяти
-      title: TITLES[getRandomInteger(0, TITLES.length - 1)],
-      type: getRandomType(),
+  return Array(offersCount).fill([]).map((it, i) => ({
+    city: Object.values(Cities)[getRandomInteger(0, Object.values(Cities).length - 1)],
+    pictures: getPictures(),
+    isPremium: Boolean(getRandomInteger()),
+    costPerNight: getRandomInteger(10, 400) * 10, // кратно десяти
+    title: TITLES[getRandomInteger(0, TITLES.length - 1)],
+    type: getRandomType(),
+    rating: getRandomInteger(10, 50) / 10, // от 1 до 5
+    id: nanoid(),
+    coords: COORDINATES[i] ? COORDINATES[i] : null,
+    comments: Array(getRandomInteger(1, 5)).fill({}).map(() => ({
+      name: `Max`,
+      avatar: `${AVATAR_URL}/${Math.random()}`,
       rating: getRandomInteger(10, 50) / 10, // от 1 до 5
-      id: nanoid(),
-      coords: COORDINATES[i] ? COORDINATES[i] : null,
-      comments: Array(getRandomInteger(1, 5)).fill({}).map(() => ({
-        name: `Max`,
-        avatar: `${AVATAR_URL}/${Math.random()}`,
-        rating: getRandomInteger(10, 50) / 10, // от 1 до 5
-        date: randomDate(),
-        content: lorem.generateSentences(2),
-        id: nanoid()
-      }))
-    });
-  }
-
-  return offers;
+      date: randomDate(),
+      content: lorem.generateSentences(2),
+      id: nanoid()
+    }))
+  }));
 };
