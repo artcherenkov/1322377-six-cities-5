@@ -80,11 +80,13 @@ MainScreen.propTypes = {
 const mapStateToProps = (state) => ({
   city: state.city,
   offers: state.offers,
+  cityOffers: state.cityOffers
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityChange(newCity) {
     dispatch(ActionCreator.changeCity(newCity));
+    dispatch(ActionCreator.getCityOffers());
   }
 });
 
