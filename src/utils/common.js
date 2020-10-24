@@ -18,3 +18,7 @@ export const randomDate = () => {
   const end = moment().subtract(MAX_MONTHS_GAP, `months`);
   return moment(start + Math.random() * (end.diff(start))).toISOString();
 };
+
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
