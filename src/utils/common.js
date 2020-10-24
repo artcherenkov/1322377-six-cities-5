@@ -10,7 +10,7 @@ export const getRandomInteger = (a = 0, b = 1) => {
 };
 
 export const toCamelCase = (word) => {
-  return word.slice(0, 1).toUpperCase() + word.slice(1);
+  return word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase();
 };
 
 export const randomDate = () => {
