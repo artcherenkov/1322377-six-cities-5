@@ -63,7 +63,7 @@ const MainScreen = (props) => {
               <OffersList offers={cityOffers} offersListType={OffersListType.CITIES}/>
             </section>
             <div className="cities__right-section">
-              <Map offers={cityOffers} cardType={MapType.CITIES}/>
+              <Map offers={cityOffers} cardType={MapType.CITIES} />
             </div>
           </div>
         </div>
