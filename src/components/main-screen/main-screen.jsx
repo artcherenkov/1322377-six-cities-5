@@ -8,9 +8,10 @@ import Map from "../map/map";
 import OfferCardProp from '../offer-card/offer-card.prop';
 import {MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
+import {toCamelCase} from "../../utils/common";
 
 const MainScreen = (props) => {
-  const {city, offers, onCityChange} = props;
+  const {city, cityOffers, onCityChange} = props;
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -43,7 +44,7 @@ const MainScreen = (props) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{cityOffers.length} places to stay in {toCamelCase(city)}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -59,10 +60,10 @@ const MainScreen = (props) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} offersListType={OffersListType.CITIES}/>
+              <OffersList offers={cityOffers} offersListType={OffersListType.CITIES}/>
             </section>
             <div className="cities__right-section">
-              <Map offers={offers} cardType={MapType.CITIES}/>
+              <Map offers={cityOffers} cardType={MapType.CITIES}/>
             </div>
           </div>
         </div>
@@ -73,6 +74,7 @@ const MainScreen = (props) => {
 
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(OfferCardProp).isRequired,
+  cityOffers: PropTypes.arrayOf(OfferCardProp).isRequired,
   city: PropTypes.string.isRequired,
   onCityChange: PropTypes.func.isRequired
 };
