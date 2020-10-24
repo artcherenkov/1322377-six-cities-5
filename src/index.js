@@ -8,7 +8,10 @@ import {generateOffers} from "./mock/offers.js";
 import {reducer} from "./store/reducer";
 
 const mockOffers = generateOffers();
-const store = createStore(reducer);
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+);
 
 ReactDOM.render(
     <Provider store={store}>
