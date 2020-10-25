@@ -10,11 +10,15 @@ export const getRandomInteger = (a = 0, b = 1) => {
 };
 
 export const toCamelCase = (word) => {
-  return word.slice(0, 1).toUpperCase() + word.slice(1);
+  return word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase();
 };
 
 export const randomDate = () => {
   const start = moment();
   const end = moment().subtract(MAX_MONTHS_GAP, `months`);
   return moment(start + Math.random() * (end.diff(start))).toISOString();
+};
+
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
 };

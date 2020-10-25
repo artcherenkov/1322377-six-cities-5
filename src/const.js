@@ -5,6 +5,15 @@ export const HousingType = {
   HOTEL: `hotel`
 };
 
+export const Cities = {
+  PARIS: `PARIS`,
+  COLOGNE: `COLOGNE`,
+  BRUSSELS: `BRUSSELS`,
+  AMSTERDAM: `AMSTERDAM`,
+  HAMBURG: `HAMBURG`,
+  DUSSELDORF: `DUSSELDORF`
+};
+
 export const MapType = {
   PROPERTY: `property__map`,
   CITIES: `cities__map`

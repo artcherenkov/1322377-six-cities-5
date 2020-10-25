@@ -14,6 +14,7 @@ export default class Map extends React.PureComponent {
     super(props);
 
     this.map = null;
+    this.markers = [];
   }
 
   initMap(city, zoom) {
@@ -33,9 +34,23 @@ export default class Map extends React.PureComponent {
   }
 
   setPin(coords) {
-    leaflet
-      .marker(coords, {icon: ICON})
-      .addTo(this.map);
+    const marker = leaflet.marker(coords, {icon: ICON});
+    this.markers.push(marker);
+    marker.addTo(this.map);
+  }
+
+  componentDidUpdate() {
+    const {offers} = this.props;
+
+    this.markers.map((marker) => {
+      marker.remove();
+    });
+
+    offers.map((offer) => {
+      if (offer.coords) {
+        this.setPin(offer.coords);
+      }
+    });
   }
 
   componentDidMount() {

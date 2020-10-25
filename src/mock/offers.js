@@ -2,7 +2,7 @@ import {nanoid} from "nanoid";
 import {LoremIpsum} from "lorem-ipsum";
 
 import {getRandomInteger} from "../utils/common.js";
-import {HousingType} from "../const.js";
+import {Cities, HousingType} from "../const.js";
 import {randomDate} from "../utils/common";
 
 const AVATAR_URL = `https://api.adorable.io/avatars/128`;
@@ -51,6 +51,7 @@ export const generateOffers = (offersCount = OFFERS_COUNT) => {
 
   for (let i = 0; i < offersCount; i++) {
     offers.push({
+      city: Object.values(Cities)[getRandomInteger(0, Object.values(Cities).length - 1)],
       pictures: getPictures(),
       isPremium: Boolean(getRandomInteger()),
       costPerNight: getRandomInteger(10, 400) * 10, // кратно десяти
