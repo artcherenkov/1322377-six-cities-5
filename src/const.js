@@ -23,3 +23,11 @@ export const OffersListType = {
   NEAR: `near-places__list`,
   CITIES: `cities__places-list tabs__content`
 };
+
+export const SortType = {
+  DEFAULT: `DEFAULT`,
+  POPULAR: `Popular`,
+  PRICE_LOW_TO_HIGH: `Price: low to high`,
+  PRICE_HIGH_TO_LOW: `Price: high to low`,
+  TOP_RATED: `Top rated first`
+};
