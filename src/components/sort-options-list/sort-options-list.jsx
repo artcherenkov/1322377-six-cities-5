@@ -1,17 +1,33 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {nanoid} from "nanoid";
+import classNames from 'classnames';
 
 import {SortType} from "../../const";
 
 export const SortOptionsList = (props) => {
   const {currentSortType, onSortTypeChange, isOpened, onRollupToggle} = props;
+
+  const getListClassNames = () => {
+    return classNames({
+      'places__options places__options--custom': true,
+      'places__options--opened': isOpened
+    });
+  };
+
+  const getOptionClassNames = (sortType) => {
+    return classNames({
+      'places__option': true,
+      'places__option--active': sortType === currentSortType
+    });
+  };
+
   return (
-    <ul className={`places__options places__options--custom ${isOpened ? `places__options--opened` : ``}`} onClick={onRollupToggle}>
+    <ul className={getListClassNames()} onClick={onRollupToggle}>
       {Object.values(SortType).map((sortType) => {
         if (sortType !== SortType.DEFAULT) {
           return (
-            <li className={`places__option ${sortType === currentSortType ? `places__option--active` : ``}`}
+            <li className={getOptionClassNames(sortType)}
               tabIndex="0"
               key={nanoid()}
               onClick={(evt) => {
