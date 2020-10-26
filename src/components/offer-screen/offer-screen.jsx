@@ -9,6 +9,9 @@ import CommentsList from "../comment-list/comments-list";
 import Map from "../map/map";
 import {MapType, OffersListType} from "../../const";
 import OffersList from "../offers-list/offers-list";
+import withUserInput from "../../hocs/with-user-input/with-user-input";
+
+const CommentFormWrapped = withUserInput(CommentForm);
 
 export default class OfferScreen extends React.PureComponent {
   constructor(props) {
@@ -161,7 +164,7 @@ export default class OfferScreen extends React.PureComponent {
                     <span className="reviews__amount">{offer.comments.length}</span>
                   </h2>
                   <CommentsList comments={offer.comments} />
-                  <CommentForm />
+                  <CommentFormWrapped />
                 </section>
               </div>
             </div>
