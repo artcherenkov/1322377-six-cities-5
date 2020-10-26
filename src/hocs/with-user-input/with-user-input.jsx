@@ -26,12 +26,9 @@ const withUserInput = (Component) => {
     }
 
     render() {
-      const {answers} = this.state;
-
       return (
         <Component
           {...this.props}
-          userAnswers={answers}
           onFieldChange={this.handleFieldChange}
           onSubmit={this.handleSubmit}
         />
