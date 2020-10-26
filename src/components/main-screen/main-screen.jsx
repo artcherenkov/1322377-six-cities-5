@@ -10,6 +10,9 @@ import {MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
+import withOptionsRollup from "../../hocs/with-options-rollup/with-options-rollup";
+
+const SortWrapped = withOptionsRollup(Sort);
 
 const MainScreen = (props) => {
   const {city, cityOffers, sortType, onCityChange, onSortTypeChange} = props;
@@ -46,7 +49,7 @@ const MainScreen = (props) => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{cityOffers.length} places to stay in {toCamelCase(city)}</b>
-              <Sort currentSortType={sortType} onSortTypeChange={onSortTypeChange} />
+              <SortWrapped currentSortType={sortType} onSortTypeChange={onSortTypeChange} />
               <OffersList offers={cityOffers} offersListType={OffersListType.CITIES} sortType={sortType} />
             </section>
             <div className="cities__right-section">
