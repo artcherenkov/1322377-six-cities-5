@@ -9,26 +9,27 @@ const OfferCard = (props) => {
   const {pictures, isPremium, costPerNight, title, type, rating, id} = props.offer;
 
   return (
-    <article className="cities__place-card place-card"
-      onMouseEnter={(evt) => {
-        evt.preventDefault();
-        props.onCardHover(id);
-      }}
-      onMouseLeave={(evt) => {
-        evt.preventDefault();
-        props.onCardHover(``);
-      }}>
-      {isPremium
-        ? <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-        : ``}
-      <Link to={{
-        pathname: `/offer/${id}`,
-        state: {
-          offers: props.offers
-        }
-      }} >
+    <Link to={{
+      pathname: `/offer/${id}`,
+      state: {
+        offers: props.offers
+      }
+    }} >
+      <article className="cities__place-card place-card"
+        onMouseEnter={(evt) => {
+          evt.preventDefault();
+          props.onCardHover(id);
+        }}
+        onMouseLeave={(evt) => {
+          evt.preventDefault();
+          props.onCardHover(``);
+        }}>
+        {isPremium
+          ? <div className="place-card__mark">
+            <span>Premium</span>
+          </div>
+          : ``}
+
         <div className="cities__image-wrapper place-card__image-wrapper">
           <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image" />
 
@@ -55,8 +56,9 @@ const OfferCard = (props) => {
           <h2 className="place-card__name">{title}</h2>
           <p className="place-card__type">{toCamelCase(type)}</p>
         </div>
-      </Link>
-    </article>
+
+      </article>
+    </Link>
   );
 };
 
