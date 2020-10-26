@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import classNames from 'classnames';
 
 import {ActionCreator} from "../../store/action";
 import OffersList from "../offers-list/offers-list.jsx";
+import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
 import OfferCardProp from '../offer-card/offer-card.prop';
 import {MapType, OffersListType} from "../../const";
@@ -16,6 +18,14 @@ const SortWrapped = withOptionsRollup(Sort);
 
 const MainScreen = (props) => {
   const {city, cityOffers, sortType, onCityChange, onSortTypeChange} = props;
+
+  const getMainClassNames = () => {
+    return classNames({
+      'page__main page__main--index': true,
+      'page__main--index-empty': cityOffers.length === 0
+    });
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -40,22 +50,23 @@ const MainScreen = (props) => {
           </div>
         </div>
       </header>
-
-      <main className="page__main page__main--index">
+      <main className={getMainClassNames()}>
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList city={city} onCityChange={onCityChange}/>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cityOffers.length} places to stay in {toCamelCase(city)}</b>
-              <SortWrapped currentSortType={sortType} onSortTypeChange={onSortTypeChange} />
-              <OffersList offers={cityOffers} offersListType={OffersListType.CITIES} sortType={sortType} />
-            </section>
-            <div className="cities__right-section">
-              <Map offers={cityOffers} cardType={MapType.CITIES} />
+          {cityOffers.length
+            ? <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{cityOffers.length} places to stay in {toCamelCase(city)}</b>
+                <SortWrapped currentSortType={sortType} onSortTypeChange={onSortTypeChange} />
+                <OffersList offers={cityOffers} offersListType={OffersListType.CITIES} sortType={sortType} />
+              </section>
+              <div className="cities__right-section">
+                <Map offers={cityOffers} cardType={MapType.CITIES} />
+              </div>
             </div>
-          </div>
+            : <NoOffers city={city} />}
         </div>
       </main>
     </div>
