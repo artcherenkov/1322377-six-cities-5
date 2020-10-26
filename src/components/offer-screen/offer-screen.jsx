@@ -14,7 +14,6 @@ export default class OfferScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    // todo как валидировать через проп тайпсы?
     this._offers = props.location.state.offers;
   }
 
