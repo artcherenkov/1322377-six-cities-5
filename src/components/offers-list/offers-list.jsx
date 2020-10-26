@@ -7,6 +7,9 @@ import {sort} from "../../utils/sort";
 import {SortType} from "../../const";
 import {ActionCreator} from "../../store/action";
 import {connect} from "react-redux";
+import withOfferCardHover from "../../hocs/with-offer-card-hover/with-offer-card-hover";
+
+const OfferCardWrapped = withOfferCardHover(OfferCard);
 
 const OffersList = (props) => {
   const {offers, offersListType, onCardHover} = props;
@@ -15,7 +18,7 @@ const OffersList = (props) => {
   return (
     <div className={offersListType + ` places__list`}>
       {sort[sortType](offers).map((offer) => (
-        <OfferCard offer={offer} offers={offers} key={offer.id} onCardHover={onCardHover} />
+        <OfferCardWrapped offer={offer} offers={offers} key={offer.id} onCardHover={onCardHover} />
       ))}
     </div>
   );
