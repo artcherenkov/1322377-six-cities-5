@@ -20,7 +20,6 @@ const App = ({offers}) => (
       <Route exact path="/favorites">
         <FavoritesScreen/>
       </Route>
-      // todo обратить внимание
       <Route exact path="/offer/:id" component={OfferScreen}/>
     </Switch>
   </BrowserRouter>

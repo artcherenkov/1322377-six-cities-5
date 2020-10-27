@@ -7,31 +7,32 @@ import OfferCardProp from "./offer-card.prop";
 
 const OfferCard = (props) => {
   const {pictures, isPremium, costPerNight, title, type, rating, id} = props.offer;
+  const {onMouseEnter, onMouseLeave} = props;
+
+  const setPremiumMark = () => {
+    if (isPremium) {
+      return (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      );
+    }
+    return ``;
+  };
 
   return (
     <article className="cities__place-card place-card"
-      onMouseEnter={(evt) => {
-        evt.preventDefault();
-        props.onCardHover(id);
-      }}
-      onMouseLeave={(evt) => {
-        evt.preventDefault();
-        props.onCardHover(``);
-      }}>
-      {isPremium
-        ? <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-        : ``}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}>
       <Link to={{
         pathname: `/offer/${id}`,
         state: {
           offers: props.offers
         }
       }} >
+        {setPremiumMark()}
         <div className="cities__image-wrapper place-card__image-wrapper">
           <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image" />
-
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
@@ -62,8 +63,9 @@ const OfferCard = (props) => {
 
 OfferCard.propTypes = {
   offer: OfferCardProp,
-  offers: PropTypes.arrayOf(OfferCardProp),
-  onCardHover: PropTypes.func.isRequired
+  offers: PropTypes.arrayOf(OfferCardProp).isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired
 };
 
 export default OfferCard;
