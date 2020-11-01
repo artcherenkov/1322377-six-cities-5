@@ -8,6 +8,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 
 import App from "./components/app/app.jsx";
 import rootReducer from './store/reducers/root-reducer';
+import {fetchOffersList} from "./store/api-action";
 
 const api = createAPI(() => console.log(`не авторизован`));
 
@@ -18,9 +19,14 @@ const store = createStore(
     )
 );
 
-ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.querySelector(`#root`)
-);
+Promise.all([
+  store.dispatch(fetchOffersList())
+])
+  .then(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+          <App />
+        </Provider>,
+        document.querySelector(`#root`)
+    );
+  });
