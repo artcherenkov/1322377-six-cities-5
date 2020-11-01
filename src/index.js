@@ -11,7 +11,7 @@ import rootReducer from './store/reducers/root-reducer';
 import {fetchOffersList} from "./store/api-action";
 import {setCityOffers} from "./store/action";
 
-const api = createAPI(() => console.log(`не авторизован`));
+const api = createAPI(() => new Error(`не авторизован`));
 
 const store = createStore(
     rootReducer,
