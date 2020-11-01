@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import classNames from 'classnames';
 
-import {ActionCreator} from "../../store/action";
 import OffersList from "../offers-list/offers-list.jsx";
 import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
@@ -13,6 +12,7 @@ import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
 import withOptionsRollup from "../../hocs/with-options-rollup/with-options-rollup";
+import {changeCity, getCityOffers, changeSortType} from "../../store/action";
 
 const SortWrapped = withOptionsRollup(Sort);
 
@@ -92,11 +92,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onCityChange(newCity) {
-    dispatch(ActionCreator.changeCity(newCity));
-    dispatch(ActionCreator.getCityOffers());
+    dispatch(changeCity(newCity));
+    dispatch(getCityOffers());
   },
   onSortTypeChange(newSortType) {
-    dispatch(ActionCreator.changeSortType(newSortType));
+    dispatch(changeSortType(newSortType));
   }
 });
 
