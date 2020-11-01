@@ -13,8 +13,8 @@ import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
 import withOptionsRollup from "../../hocs/with-options-rollup/with-options-rollup";
 import {changeCity, changeSortType, getCityOffers as getCityOffersAction} from "../../store/action";
-import {getActiveOfferId, getCity, getSortType, getCityOffers} from "../../store/reducers/app-state/selectors";
-import {getOffers} from "../../store/reducers/app-data/selectors";
+import {getActiveOfferId, getCity, getSortType} from "../../store/reducers/app-state/selectors";
+import {getOffers, getCityOffers} from "../../store/reducers/app-data/selectors";
 
 const SortWrapped = withOptionsRollup(Sort);
 
