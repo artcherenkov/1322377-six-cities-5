@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
 export default PropTypes.shape({
-  picture: PropTypes.string,
+  images: PropTypes.arrayOf(PropTypes.string),
   isPremium: PropTypes.bool,
-  costPerNight: PropTypes.number,
+  price: PropTypes.number,
   title: PropTypes.string,
   type: PropTypes.string,
   rating: PropTypes.number

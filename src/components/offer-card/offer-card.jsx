@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import OfferCardProp from "./offer-card.prop";
 
 const OfferCard = (props) => {
-  const {pictures, isPremium, costPerNight, title, type, rating, id} = props.offer;
+  const {images, isPremium, price, title, type, rating, id} = props.offer;
   const {onMouseEnter, onMouseLeave} = props;
 
   const setPremiumMark = () => {
@@ -32,12 +32,12 @@ const OfferCard = (props) => {
       }} >
         {setPremiumMark()}
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <img className="place-card__image" src={pictures[0]} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place image" />
         </div>
         <div className="place-card__info">
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
-              <b className="place-card__price-value">&euro;{costPerNight}</b>
+              <b className="place-card__price-value">&euro;{price}</b>
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
             <button className="place-card__bookmark-button button" type="button">
