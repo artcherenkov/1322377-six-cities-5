@@ -2,18 +2,14 @@ import {extend} from "../utils/common";
 import {Cities, SortType} from "../const";
 import {ActionType} from "./action";
 import {getCityOffers} from "../core";
-import {generateOffers} from "../mock/offers";
 
-const OFFERS_COUNT = 40;
 const DEFAULT_CITY = Cities.AMSTERDAM;
 const DEFAULT_SORT_TYPE = SortType.POPULAR;
 
-const mockOffers = generateOffers(OFFERS_COUNT);
-
 const initialState = {
   city: DEFAULT_CITY,
-  cityOffers: getCityOffers(mockOffers, DEFAULT_CITY),
-  offers: mockOffers,
+  cityOffers: getCityOffers([], DEFAULT_CITY),
+  offers: [],
   sortType: DEFAULT_SORT_TYPE,
   activeOfferId: ``
 };
