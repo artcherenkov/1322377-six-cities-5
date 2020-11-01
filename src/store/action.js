@@ -27,7 +27,7 @@ export const changeSortType = (newSortType) => ({
 
 export const changeActiveOffer = (newActiveOffer) => ({
   type: ActionType.CHANGE_ACTIVE_OFFER,
-  payload: newActiveOffer,
+  payload: newActiveOffer.toString(),
 });
 
 export const loadHotels = (hotels) => ({
