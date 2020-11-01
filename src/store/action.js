@@ -1,7 +1,10 @@
+import {Cities} from "../const";
+
+const DEFAULT_CITY = Cities.AMSTERDAM;
+
 export const ActionType = {
   CHANGE_CITY: `CHANGE_CITY`,
-  GET_OFFERS: `GET_OFFERS`,
-  GET_CITY_OFFERS: `GET_CITY_OFFERS`,
+  SET_CITY_OFFERS: `SET_CITY_OFFERS`,
   CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
   CHANGE_ACTIVE_OFFER: `CHANGE_ACTIVE_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
@@ -12,12 +15,9 @@ export const changeCity = (newCity) => ({
   payload: newCity,
 });
 
-export const getOffersList = () => ({
-  type: ActionType.GET_OFFERS,
-});
-
-export const getCityOffers = () => ({
-  type: ActionType.GET_CITY_OFFERS,
+export const setCityOffers = (city = DEFAULT_CITY) => ({
+  type: ActionType.SET_CITY_OFFERS,
+  payload: city
 });
 
 export const changeSortType = (newSortType) => ({

@@ -12,7 +12,7 @@ import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
 import withOptionsRollup from "../../hocs/with-options-rollup/with-options-rollup";
-import {changeCity, changeSortType, getCityOffers as getCityOffersAction} from "../../store/action";
+import {changeCity, changeSortType, setCityOffers} from "../../store/action";
 import {getActiveOfferId, getCity, getSortType} from "../../store/reducers/app-state/selectors";
 import {getOffers, getCityOffers} from "../../store/reducers/app-data/selectors";
 
@@ -95,7 +95,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onCityChange(newCity) {
     dispatch(changeCity(newCity));
-    dispatch(getCityOffersAction());
+    dispatch(setCityOffers(newCity));
   },
   onSortTypeChange(newSortType) {
     dispatch(changeSortType(newSortType));

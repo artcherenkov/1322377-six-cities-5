@@ -1,13 +1,10 @@
 import {extend} from "../../../utils/common";
 import {ActionType} from "../../action";
 import {getCityOffers} from "../../../core";
-import {Cities} from "../../../const";
-
-const DEFAULT_CITY = Cities.AMSTERDAM;
 
 const initialState = {
   offers: [],
-  cityOffers: getCityOffers([], DEFAULT_CITY)
+  cityOffers: []
 };
 
 const appData = (state = initialState, action) => {
@@ -17,8 +14,7 @@ const appData = (state = initialState, action) => {
         offers: action.payload
       });
 
-    case ActionType.GET_CITY_OFFERS:
-      console.log(getCityOffers(state.offers, action.payload));
+    case ActionType.SET_CITY_OFFERS:
       return extend(state, {
         cityOffers: getCityOffers(state.offers, action.payload)
       });
