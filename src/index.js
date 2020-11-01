@@ -4,15 +4,18 @@ import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import {createAPI} from "./services/api";
 import {Provider} from 'react-redux';
+import {composeWithDevTools} from "redux-devtools-extension";
 
 import App from "./components/app/app.jsx";
-import {reducer} from "./store/reducer";
+import rootReducer from './store/reducers/root-reducer';
 
 const api = createAPI(() => console.log(`не авторизован`));
 
 const store = createStore(
-    reducer,
-    applyMiddleware(thunk.withExtraArgument(api))
+    rootReducer,
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api))
+    )
 );
 
 ReactDOM.render(
