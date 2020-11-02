@@ -25,9 +25,9 @@ export default class OfferScreen extends React.PureComponent {
   }
 
   render() {
-    const offer = this._offers.find((_offer) => _offer.id === this.props.match.params.id);
+    const offer = this._offers.find((_offer) => _offer.id.toString() === this.props.match.params.id);
     const offers = this._offers;
-    const {pictures, isPremium, costPerNight, title, type, rating} = offer;
+    const {images, isPremium, price, title, type, rating} = offer;
 
     return (
       <div className="page">
@@ -58,7 +58,7 @@ export default class OfferScreen extends React.PureComponent {
           <section className="property">
             <div className="property__gallery-container container">
               <div className="property__gallery">
-                {pictures.map((picture) => (
+                {images.map((picture) => (
                   <div key={nanoid()} className="property__image-wrapper">
                     <img className="property__image" src={picture} alt="Photo studio" />
                   </div>
@@ -102,7 +102,7 @@ export default class OfferScreen extends React.PureComponent {
                   </li>
                 </ul>
                 <div className="property__price">
-                  <b className="property__price-value">&euro;{costPerNight}</b>
+                  <b className="property__price-value">&euro;{price}</b>
                   <span className="property__price-text">&nbsp;night</span>
                 </div>
                 <div className="property__inside">
@@ -159,13 +159,13 @@ export default class OfferScreen extends React.PureComponent {
                     </p>
                   </div>
                 </div>
-                <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews &middot;
-                    <span className="reviews__amount">{offer.comments.length}</span>
-                  </h2>
-                  <CommentsList comments={offer.comments} />
-                  <CommentFormWrapped />
-                </section>
+                {/*<section className="property__reviews reviews">*/}
+                {/*  <h2 className="reviews__title">Reviews &middot;*/}
+                {/*    <span className="reviews__amount">{offer.comments.length}</span>*/}
+                {/*  </h2>*/}
+                {/*  <CommentsList comments={offer.comments} />*/}
+                {/*  <CommentFormWrapped />*/}
+                {/*</section>*/}
               </div>
             </div>
             <Map offers={offers} cardType={MapType.PROPERTY} />
