@@ -22,3 +22,5 @@ export const randomDate = () => {
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
+
+export const pluralize = (count, noun, suffix = `s`) => `${count} ${noun}${count !== 1 ? suffix : ``}`;
