@@ -13,20 +13,20 @@ export const adaptOffersToClient = (offer) => {
     isFavorite: offer.is_favorite,
     isPremium: offer.is_premium,
     maxAdults: offer.max_adults,
-    previewImage: offer.preview_image
+    previewImage: offer.preview_image,
+    host: Object.assign({}, offer.host, {
+      avatarUrl: offer.host.avatar_url,
+      isPro: offer.host.is_pro
+    })
   });
 
+  // Ненужные ключи удаляем
   delete adaptedOffer.is_favorite;
   delete adaptedOffer.is_premium;
   delete adaptedOffer.max_adults;
   delete adaptedOffer.preview_image;
-  // Ненужные ключи мы удаляем
-  // delete adaptedOffer.offers;
-  // delete adaptedOffer.base_price;
-  // delete adaptedOffer.destination;
-  // delete adaptedOffer.date_from;
-  // delete adaptedOffer.date_to;
-  // delete adaptedOffer.is_favorite;
+  delete adaptedOffer.host.avatar_url;
+  delete adaptedOffer.host.is_pro;
 
   return adaptedOffer;
 };
