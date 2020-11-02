@@ -1,6 +1,7 @@
 import {extend} from "../../../utils/common";
 import {ActionType} from "../../action";
-import {adaptOffersToClient, getCityOffers} from "../../../core";
+import {getCityOffers} from "../../../core/core";
+import {adaptOffersToClient} from "../../../core/adapter/offers";
 
 const initialState = {
   offers: [],
