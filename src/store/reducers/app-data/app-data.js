@@ -5,7 +5,8 @@ import {adaptOffersToClient} from "../../../core/adapter/offers";
 
 const initialState = {
   offers: [],
-  cityOffers: []
+  cityOffers: [],
+  comments: []
 };
 
 const appData = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const appData = (state = initialState, action) => {
     case ActionType.LOAD_OFFERS:
       return extend(state, {
         offers: action.payload.map((offer) => adaptOffersToClient(offer))
+      });
+
+    case ActionType.LOAD_COMMENTS:
+      return extend(state, {
+        comments: action.payload
       });
 
     case ActionType.SET_CITY_OFFERS:

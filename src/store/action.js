@@ -8,6 +8,7 @@ export const ActionType = {
   CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
   CHANGE_ACTIVE_OFFER: `CHANGE_ACTIVE_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
+  LOAD_COMMENTS: `LOAD_COMMENTS`
 };
 
 export const changeCity = (newCity) => ({
@@ -33,4 +34,9 @@ export const changeActiveOffer = (newActiveOffer) => ({
 export const loadHotels = (hotels) => ({
   type: ActionType.LOAD_OFFERS,
   payload: hotels,
+});
+
+export const loadComments = (comments) => ({
+  type: ActionType.LOAD_COMMENTS,
+  payload: comments
 });
