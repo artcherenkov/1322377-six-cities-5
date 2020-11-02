@@ -2,6 +2,7 @@ import {extend} from "../../../utils/common";
 import {ActionType} from "../../action";
 import {getCityOffers} from "../../../core/core";
 import {adaptOffersToClient} from "../../../core/adapter/offers";
+import {adaptCommentsToClient} from "../../../core/adapter/comments";
 
 const initialState = {
   offers: [],
@@ -18,7 +19,7 @@ const appData = (state = initialState, action) => {
 
     case ActionType.LOAD_COMMENTS:
       return extend(state, {
-        comments: action.payload
+        comments: action.payload.map((comment) => adaptCommentsToClient(comment))
       });
 
     case ActionType.SET_CITY_OFFERS:
