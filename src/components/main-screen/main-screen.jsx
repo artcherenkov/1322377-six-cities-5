@@ -18,7 +18,7 @@ import {getOffers, getCityOffers} from "../../store/reducers/app-data/selectors"
 
 const SortWrapped = withOptionsRollup(Sort);
 
-const MainScreen = (props) => {
+const MainScreen = React.memo(function MainScreen(props) {
   const {city, cityOffers, sortType, onCityChange, onSortTypeChange} = props;
 
   const getMainClassNames = () => {
@@ -73,7 +73,7 @@ const MainScreen = (props) => {
       </main>
     </div>
   );
-};
+});
 
 MainScreen.propTypes = {
   offers: PropTypes.arrayOf(OfferCardProp).isRequired,
