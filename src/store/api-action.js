@@ -1,4 +1,5 @@
-import {loadHotels, loadComments} from "./action";
+import {loadHotels, loadComments, changeAuthStatus} from "./action";
+import {AuthStatus} from "../const";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -8,4 +9,18 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
 export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`)
     .then(({data}) => dispatch(loadComments(data)))
+);
+
+export const checkAuth = () => (dispatch, _getState, api) => (
+  api.get(`/login`)
+    .then(() => dispatch(changeAuthStatus(AuthStatus.AUTH)))
+    .catch((err) => {
+      console.log(err);
+      // throw err;
+    })
+);
+
+export const login = ({login: email, password}) => (dispatch, _getState, api) => (
+  api.post(`/login`, {email, password})
+    .then(() => dispatch(changeAuthStatus(AuthStatus.AUTH)))
 );
