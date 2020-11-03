@@ -7,6 +7,7 @@ import FavoritesScreen from "../favorites-screen/favorites-screen.jsx";
 import LoginScreen from "../login-screen/login-screen.jsx";
 import OfferScreen from "../offer-screen/offer-screen.jsx";
 import OfferCardProp from '../offer-card/offer-card.prop';
+import PrivateRoute from "../private-route/private-route";
 
 const App = ({offers}) => (
   <BrowserRouter>
@@ -17,9 +18,11 @@ const App = ({offers}) => (
       <Route exact path="/login">
         <LoginScreen/>
       </Route>
-      <Route exact path="/favorites">
-        <FavoritesScreen/>
-      </Route>
+      <PrivateRoute exact
+        path={`/favorites`}
+        render={() => <FavoritesScreen />}
+      >
+      </PrivateRoute>
       <Route exact path="/offer/:id" component={OfferScreen}/>
     </Switch>
   </BrowserRouter>
