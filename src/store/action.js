@@ -8,7 +8,8 @@ export const ActionType = {
   CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
   CHANGE_ACTIVE_OFFER: `CHANGE_ACTIVE_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
-  LOAD_COMMENTS: `LOAD_COMMENTS`
+  LOAD_COMMENTS: `LOAD_COMMENTS`,
+  CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`
 };
 
 export const changeCity = (newCity) => ({
@@ -39,4 +40,9 @@ export const loadHotels = (hotels) => ({
 export const loadComments = (comments) => ({
   type: ActionType.LOAD_COMMENTS,
   payload: comments
+});
+
+export const changeAuthStatus = (authStatus) => ({
+  type: ActionType.CHANGE_AUTH_STATUS,
+  payload: authStatus
 });
