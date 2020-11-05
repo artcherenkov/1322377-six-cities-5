@@ -10,7 +10,7 @@ const appUser = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_AUTH_STATUS:
       return extend(state, {
-        authStatus: action
+        authStatus: action.payload
       });
   }
 
