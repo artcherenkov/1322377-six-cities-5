@@ -20,5 +20,5 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(() => dispatch(changeAuthStatus(AuthStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(`/favorites`)))
+    .then(() => dispatch(redirectToRoute(`/`)))
 );
