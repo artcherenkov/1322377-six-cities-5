@@ -9,9 +9,12 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import App from "./components/app/app.jsx";
 import rootReducer from './store/reducers/root-reducer';
 import {checkAuth, fetchOffersList} from "./store/api-action";
-import {setCityOffers} from "./store/action";
+import {changeAuthStatus, setCityOffers} from "./store/action";
+import {AuthStatus} from "./const";
 
-const api = createAPI(() => new Error(`не авторизован`));
+const api = createAPI(
+    () => store.dispatch(changeAuthStatus(AuthStatus.NO_AUTH))
+);
 
 const store = createStore(
     rootReducer,

@@ -14,10 +14,7 @@ export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(() => dispatch(changeAuthStatus(AuthStatus.AUTH)))
-    .catch((err) => {
-      console.log(err);
-      // throw err;
-    })
+    .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
