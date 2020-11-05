@@ -3,7 +3,8 @@ import {ActionType} from "../../action";
 import {AuthStatus} from "../../../const";
 
 const initialState = {
-  authStatus: AuthStatus.NO_AUTH
+  authStatus: AuthStatus.NO_AUTH,
+  username: ``
 };
 
 const appUser = (state = initialState, action) => {
@@ -11,6 +12,10 @@ const appUser = (state = initialState, action) => {
     case ActionType.CHANGE_AUTH_STATUS:
       return extend(state, {
         authStatus: action.payload
+      });
+    case ActionType.SET_USER_NAME:
+      return extend(state, {
+        username: action.payload
       });
   }
 

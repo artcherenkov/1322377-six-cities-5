@@ -10,7 +10,8 @@ export const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
   CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`,
-  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
+  SET_USER_NAME: `SET_USER_NAME`
 };
 
 export const changeCity = (newCity) => ({
@@ -53,3 +54,7 @@ export const redirectToRoute = (url) => ({
   payload: url,
 });
 
+export const setUserName = (username) => ({
+  type: ActionType.SET_USER_NAME,
+  payload: username,
+});
