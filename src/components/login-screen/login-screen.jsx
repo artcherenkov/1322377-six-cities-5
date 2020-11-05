@@ -1,6 +1,7 @@
 import React, {useRef, useCallback} from 'react';
 import {useDispatch} from "react-redux";
 import {login} from "../../store/api-action";
+import {setUserName} from "../../store/action";
 
 const LoginScreen = () => {
   const loginRef = useRef(null);
@@ -14,6 +15,7 @@ const LoginScreen = () => {
           login: loginRef.current.value,
           password: pwdRef.current.value,
         }));
+        dispatch(setUserName(loginRef.current.value));
       },
       [dispatch]
   );
