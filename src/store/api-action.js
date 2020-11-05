@@ -1,4 +1,4 @@
-import {loadHotels, loadComments, changeAuthStatus} from "./action";
+import {loadHotels, loadComments, changeAuthStatus, redirectToRoute} from "./action";
 import {AuthStatus} from "../const";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
@@ -20,4 +20,5 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(() => dispatch(changeAuthStatus(AuthStatus.AUTH)))
+    .then(() => dispatch(redirectToRoute(`/favorites`)))
 );

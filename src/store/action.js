@@ -9,7 +9,8 @@ export const ActionType = {
   CHANGE_ACTIVE_OFFER: `CHANGE_ACTIVE_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
-  CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`
+  CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`,
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`
 };
 
 export const changeCity = (newCity) => ({
@@ -46,3 +47,9 @@ export const changeAuthStatus = (authStatus) => ({
   type: ActionType.CHANGE_AUTH_STATUS,
   payload: authStatus
 });
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
+});
+
