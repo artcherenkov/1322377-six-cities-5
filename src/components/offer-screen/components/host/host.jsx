@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import classNames from "classnames";
 
 const Host = ({host, description}) => {
@@ -16,6 +18,15 @@ const Host = ({host, description}) => {
         <p className="property__text">{description}</p>
       </div>
     </div>);
+};
+
+Host.propTypes = {
+  host: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string.isRequired,
+    isPro: PropTypes.bool.isRequired,
+  }),
+  description: PropTypes.string.isRequired,
 };
 
 export default Host;
