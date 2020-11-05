@@ -7,7 +7,7 @@ import OffersList from "../offers-list/offers-list.jsx";
 import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
 import OfferCardProp from '../offer-card/offer-card.prop';
-import {MapType, OffersListType} from "../../const";
+import {AuthStatus, MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
@@ -15,11 +15,13 @@ import withOptionsRollup from "../../hocs/with-options-rollup/with-options-rollu
 import {changeCity, changeSortType, setCityOffers} from "../../store/action";
 import {getActiveOfferId, getCity, getSortType} from "../../store/reducers/app-state/selectors";
 import {getOffers, getCityOffers} from "../../store/reducers/app-data/selectors";
+import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
+import {Link} from "react-router-dom";
 
 const SortWrapped = withOptionsRollup(Sort);
 
 const MainScreen = React.memo(function MainScreen(props) {
-  const {city, cityOffers, sortType, onCityChange, onSortTypeChange} = props;
+  const {city, cityOffers, sortType, onCityChange, onSortTypeChange, isLoggedIn, username} = props;
 
   const getMainClassNames = () => {
     return classNames({
@@ -41,11 +43,13 @@ const MainScreen = React.memo(function MainScreen(props) {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link to={isLoggedIn === AuthStatus.AUTH ? `/favorites` : `/login`} className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
+                    <span className="header__user-name user__name">
+                      {isLoggedIn === AuthStatus.AUTH ? username : `Sign in`}
+                    </span>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -81,7 +85,9 @@ MainScreen.propTypes = {
   city: PropTypes.string.isRequired,
   onCityChange: PropTypes.func.isRequired,
   onSortTypeChange: PropTypes.func.isRequired,
-  sortType: PropTypes.string.isRequired
+  sortType: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -89,7 +95,9 @@ const mapStateToProps = (state) => ({
   offers: getOffers(state),
   cityOffers: getCityOffers(state),
   sortType: getSortType(state),
-  activeOffer: getActiveOfferId(state)
+  activeOffer: getActiveOfferId(state),
+  isLoggedIn: getAuthStatus(state),
+  username: getUsername(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
