@@ -12,3 +12,14 @@ export const adaptCommentsToClient = (comment) => {
 
   return adaptedComment;
 };
+
+export const adaptCommentToServer = (comment) => {
+  const adaptedComment = Object.assign({}, comment, {
+    comment: comment.review,
+    rating: +comment.rating
+  });
+
+  delete adaptedComment.review;
+
+  return adaptedComment;
+};
