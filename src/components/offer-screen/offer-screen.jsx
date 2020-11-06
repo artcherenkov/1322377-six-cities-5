@@ -11,7 +11,7 @@ import withUserInput from "../../hocs/with-user-input/with-user-input";
 import Features from "./components/features/features";
 import Goods from "./components/goods/goods";
 import Host from "./components/host/host";
-import Header from "./components/header/header";
+import Header from "../header/header";
 import PremiumMark from "./components/premium-mark/premium-mark";
 import {connect} from "react-redux";
 import {fetchCommentsList} from "../../store/api-action";
@@ -19,12 +19,13 @@ import {getCityOffers, getComments} from "../../store/reducers/app-data/selector
 import CommentProp from '../comment/comment.prop';
 
 import OfferCardProp from '../offer-card/offer-card.prop';
+import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 
 const CommentFormWrapped = withUserInput(CommentForm);
 
 const OfferScreen = React.memo(function OfferScreen(props) {
   const offerId = props.match.params.id;
-  const {offers, comments} = props;
+  const {offers, comments, isLoggedIn, username} = props;
   const offer = offers.find((_offer) => _offer.id.toString() === offerId);
   const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = offer;
 
@@ -36,7 +37,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
 
   return (
     <div className="page">
-      <Header/>
+      <Header isLoggedIn={isLoggedIn} username={username}/>
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -101,11 +102,15 @@ OfferScreen.propTypes = {
   comments: PropTypes.arrayOf(CommentProp),
   match: PropTypes.any,
   loadComments: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
   offers: getCityOffers(state),
-  comments: getComments(state)
+  comments: getComments(state),
+  isLoggedIn: getAuthStatus(state),
+  username: getUsername(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

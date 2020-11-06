@@ -7,7 +7,7 @@ import OffersList from "../offers-list/offers-list.jsx";
 import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
 import OfferCardProp from '../offer-card/offer-card.prop';
-import {AuthStatus, MapType, OffersListType} from "../../const";
+import {MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
@@ -16,7 +16,7 @@ import {changeCity, changeSortType, setCityOffers} from "../../store/action";
 import {getActiveOfferId, getCity, getSortType} from "../../store/reducers/app-state/selectors";
 import {getOffers, getCityOffers} from "../../store/reducers/app-data/selectors";
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
-import {Link} from "react-router-dom";
+import Header from "../header/header";
 
 const SortWrapped = withOptionsRollup(Sort);
 
@@ -32,30 +32,7 @@ const MainScreen = React.memo(function MainScreen(props) {
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link to={isLoggedIn === AuthStatus.AUTH ? `/favorites` : `/login`} className="header__nav-link header__nav-link--profile" href="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">
-                      {isLoggedIn === AuthStatus.AUTH ? username : `Sign in`}
-                    </span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header isLoggedIn={isLoggedIn} username={username} />
       <main className={getMainClassNames()}>
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList city={city} onCityChange={onCityChange}/>

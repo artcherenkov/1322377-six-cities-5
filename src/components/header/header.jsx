@@ -1,7 +1,9 @@
 import {Link} from "react-router-dom";
 import React from "react";
+import {AuthStatus} from "../../const";
+import PropTypes from "prop-types";
 
-const Header = () => {
+const Header = ({isLoggedIn, username}) => {
   return (
     <header className="header">
       <div className="container">
@@ -14,11 +16,13 @@ const Header = () => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
+                <Link to={isLoggedIn === AuthStatus.AUTH ? `/favorites` : `/login`} className="header__nav-link header__nav-link--profile" href="#">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                </a>
+                  <span className="header__user-name user__name">
+                    {isLoggedIn === AuthStatus.AUTH ? username : `Sign in`}
+                  </span>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -26,6 +30,11 @@ const Header = () => {
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  isLoggedIn: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired
 };
 
 export default Header;
