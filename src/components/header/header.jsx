@@ -1,9 +1,21 @@
 import {Link} from "react-router-dom";
-import React from "react";
-import {AuthStatus} from "../../const";
+import React, {useCallback} from "react";
 import PropTypes from "prop-types";
+import {useDispatch} from "react-redux";
+
+import {AuthStatus} from "../../const";
+import browserHistory from '../../browser-history';
+import {pushRouteToRedirect} from "../../store/action";
 
 const Header = ({isLoggedIn, username}) => {
+  const currentPath = browserHistory.location.pathname;
+  const dispatch = useDispatch();
+
+  const onLinkClick = useCallback(
+      () => dispatch(pushRouteToRedirect(currentPath)),
+      [dispatch]
+  );
+
   return (
     <header className="header">
       <div className="container">
@@ -16,7 +28,7 @@ const Header = ({isLoggedIn, username}) => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <Link to={isLoggedIn === AuthStatus.AUTH ? `/favorites` : `/login`} className="header__nav-link header__nav-link--profile" href="#">
+                <Link to={isLoggedIn === AuthStatus.AUTH ? `/favorites` : `/login`} onClick={onLinkClick} className="header__nav-link header__nav-link--profile" href="#">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
                   <span className="header__user-name user__name">
