@@ -97,7 +97,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
                   <span className="reviews__amount">{comments.length}</span>
                 </h2>
                 <CommentsList comments={comments}/>
-                {isLoggedIn === AuthStatus.AUTH && <CommentFormWrapped/>}
+                {isLoggedIn === AuthStatus.AUTH && <CommentFormWrapped offerId={offerId}/>}
               </section>
             </div>
           </div>

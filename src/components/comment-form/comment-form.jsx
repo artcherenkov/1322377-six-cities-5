@@ -1,8 +1,22 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
+import {adaptCommentToServer} from "../../core/adapter/comments";
+import {useDispatch} from "react-redux";
+import {postComment} from "../../store/api-action";
 
-const CommentForm = (props) => {
-  const {onFieldChange, onSubmit} = props;
+const CommentForm = ({onFieldChange, comment, offerId}) => {
+  comment = adaptCommentToServer(comment);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = useCallback(
+      (evt) => {
+        evt.preventDefault();
+        dispatch(postComment(comment, offerId));
+      },
+      [dispatch, comment]
+  );
+
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={onSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -54,8 +68,12 @@ const CommentForm = (props) => {
 };
 
 CommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onFieldChange: PropTypes.func.isRequired
+  onFieldChange: PropTypes.func.isRequired,
+  comment: PropTypes.shape({
+    comment: PropTypes.string,
+    rating: PropTypes.string
+  }).isRequired,
+  offerId: PropTypes.string.isRequired
 };
 
 export default CommentForm;
