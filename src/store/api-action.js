@@ -1,5 +1,6 @@
-import {loadHotels, loadComments, changeAuthStatus, redirectToRoute} from "./action";
+import {loadHotels, loadComments, changeAuthStatus, redirectToRoute, pushRouteToRedirect} from "./action";
 import {AuthStatus} from "../const";
+import {getRouteToRedirect} from "./reducers/app-state/selectors";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -17,8 +18,13 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     .catch(() => {})
 );
 
-export const login = ({login: email, password}) => (dispatch, _getState, api) => (
+export const login = ({login: email, password}) => (dispatch, getState, api) => (
   api.post(`/login`, {email, password})
     .then(() => dispatch(changeAuthStatus(AuthStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(`/`)))
+    .then(() => {
+      const state = getState();
+      const route = getRouteToRedirect(state);
+      dispatch(redirectToRoute(route));
+      dispatch(pushRouteToRedirect(``));
+    })
 );
