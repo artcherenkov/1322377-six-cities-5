@@ -9,19 +9,24 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import App from "./components/app/app.jsx";
 import rootReducer from './store/reducers/root-reducer';
 import {fetchOffersList} from "./store/api-action";
-import {setCityOffers} from "./store/action";
+import {changeAuthStatus, setCityOffers} from "./store/action";
+import {AuthStatus} from "./const";
+import {redirect} from "./store/middlewares/redirect";
 
-const api = createAPI(() => new Error(`не авторизован`));
+const api = createAPI(
+    () => store.dispatch(changeAuthStatus(AuthStatus.NO_AUTH))
+);
 
 const store = createStore(
     rootReducer,
     composeWithDevTools(
-        applyMiddleware(thunk.withExtraArgument(api))
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
     )
 );
 
 Promise.all([
-  store.dispatch(fetchOffersList())
+  store.dispatch(fetchOffersList()),
 ])
   .then(() => store.dispatch(setCityOffers()))
   .then(() => {

@@ -46,27 +46,18 @@ class Map extends React.PureComponent {
     });
   }
 
-  setPin(coords) {
-    const marker = leaflet.marker(coords, {icon: ICON});
-    this.markers.push(marker);
-    marker.addTo(this.map);
-  }
-
-  setActivePin(coords) {
-    const marker = leaflet.marker(coords, {icon: ACTIVE_ICON});
+  setPin(location, {isActive = false}) {
+    const coords = Object.values(location).slice(0, 2);
+    const marker = leaflet.marker(coords, {icon: isActive ? ACTIVE_ICON : ICON});
     this.markers.push(marker);
     marker.addTo(this.map);
   }
 
   setPins(offers, activeOfferId) {
     offers.map((offer) => {
-      if (offer.coords) {
-        if (offer.id === activeOfferId) {
-          this.setActivePin(offer.coords);
-        } else {
-          this.setPin(offer.coords);
-        }
-      }
+      const {city, id} = offer;
+      const isActive = id.toString() === activeOfferId;
+      this.setPin(city.location, {isActive});
     });
   }
 

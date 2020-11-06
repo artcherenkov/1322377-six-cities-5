@@ -8,6 +8,10 @@ export const ActionType = {
   CHANGE_SORT_TYPE: `CHANGE_SORT_TYPE`,
   CHANGE_ACTIVE_OFFER: `CHANGE_ACTIVE_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
+  LOAD_COMMENTS: `LOAD_COMMENTS`,
+  CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`,
+  REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
+  SET_USER_NAME: `SET_USER_NAME`
 };
 
 export const changeCity = (newCity) => ({
@@ -33,4 +37,24 @@ export const changeActiveOffer = (newActiveOffer) => ({
 export const loadHotels = (hotels) => ({
   type: ActionType.LOAD_OFFERS,
   payload: hotels,
+});
+
+export const loadComments = (comments) => ({
+  type: ActionType.LOAD_COMMENTS,
+  payload: comments
+});
+
+export const changeAuthStatus = (authStatus) => ({
+  type: ActionType.CHANGE_AUTH_STATUS,
+  payload: authStatus
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
+});
+
+export const setUserName = (username) => ({
+  type: ActionType.SET_USER_NAME,
+  payload: username,
 });

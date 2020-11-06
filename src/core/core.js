@@ -1,4 +1,4 @@
-import {toCamelCase} from "./utils/common";
+import {toCamelCase} from "../utils/common";
 
 export const getCityOffers = (offers, city) => {
   if (offers) {
