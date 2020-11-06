@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {nanoid} from "nanoid";
 
 import CommentForm from "../comment-form/comment-form.jsx";
 import CommentsList from "../comment-list/comments-list";
 import Map from "../map/map";
-import {MapType, OffersListType} from "../../const";
+import {AuthStatus, MapType, OffersListType} from "../../const";
 import OffersList from "../offers-list/offers-list";
 import withUserInput from "../../hocs/with-user-input/with-user-input";
 import Features from "./components/features/features";
@@ -13,13 +13,15 @@ import Goods from "./components/goods/goods";
 import Host from "./components/host/host";
 import Header from "../header/header";
 import PremiumMark from "./components/premium-mark/premium-mark";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {fetchCommentsList} from "../../store/api-action";
 import {getCityOffers, getComments} from "../../store/reducers/app-data/selectors";
 import CommentProp from '../comment/comment.prop';
 
 import OfferCardProp from '../offer-card/offer-card.prop';
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
+import {pushRouteToRedirect, redirectToRoute} from "../../store/action";
+import browserHistory from "../../browser-history";
 
 const CommentFormWrapped = withUserInput(CommentForm);
 
@@ -28,6 +30,21 @@ const OfferScreen = React.memo(function OfferScreen(props) {
   const {offers, comments, isLoggedIn, username} = props;
   const offer = offers.find((_offer) => _offer.id.toString() === offerId);
   const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = offer;
+
+  const dispatch = useDispatch();
+
+  const currentPath = browserHistory.location.pathname;
+  const onToBookmarkClick = useCallback(
+      () => {
+        dispatch(pushRouteToRedirect(currentPath));
+        if (isLoggedIn === AuthStatus.AUTH) {
+          dispatch(redirectToRoute(`/favorites`));
+        } else {
+          dispatch(redirectToRoute(`/login`));
+        }
+      },
+      [dispatch]
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -54,7 +71,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
               {isPremium && <PremiumMark/>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className="property__bookmark-button button" type="button" onClick={onToBookmarkClick}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"/>
                   </svg>
@@ -80,7 +97,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
                   <span className="reviews__amount">{comments.length}</span>
                 </h2>
                 <CommentsList comments={comments}/>
-                <CommentFormWrapped/>
+                {isLoggedIn === AuthStatus.AUTH && <CommentFormWrapped/>}
               </section>
             </div>
           </div>
