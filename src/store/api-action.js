@@ -28,3 +28,8 @@ export const login = ({login: email, password}) => (dispatch, getState, api) => 
       dispatch(pushRouteToRedirect(``));
     })
 );
+
+export const postComment = ({comment, rating}, id) => (dispatch, getState, api) => (
+  api.post(`/comments/${id}`, {comment, rating})
+    .then(({data}) => dispatch(loadComments(data)))
+);
