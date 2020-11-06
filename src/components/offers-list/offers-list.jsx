@@ -5,7 +5,7 @@ import OfferCard from "../offer-card/offer-card.jsx";
 import OfferCardProp from '../offer-card/offer-card.prop';
 import {sort} from "../../utils/sort";
 import {SortType} from "../../const";
-import {ActionCreator} from "../../store/action";
+import {changeActiveOffer} from "../../store/action";
 import {connect} from "react-redux";
 import withOfferCardHover from "../../hocs/with-offer-card-hover/with-offer-card-hover";
 
@@ -34,7 +34,7 @@ OffersList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onCardHover(newActiveType) {
-    dispatch(ActionCreator.changeActiveOffer(newActiveType));
+    dispatch(changeActiveOffer(newActiveType));
   }
 });
 

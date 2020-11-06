@@ -4,6 +4,7 @@ import * as leaflet from 'leaflet';
 
 import OfferCardProp from '../offer-card/offer-card.prop';
 import {connect} from "react-redux";
+import {getActiveOfferId} from "../../store/reducers/app-state/selectors";
 
 const ICON = leaflet.icon({
   iconUrl: `img/pin.svg`,
@@ -98,7 +99,7 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeOfferId: state.activeOfferId
+  activeOfferId: getActiveOfferId(state)
 });
 
 export {Map};
