@@ -11,7 +11,8 @@ export const ActionType = {
   LOAD_COMMENTS: `LOAD_COMMENTS`,
   CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
-  SET_USER_NAME: `SET_USER_NAME`
+  SET_USER_NAME: `SET_USER_NAME`,
+  PUSH_ROUTE_TO_REDIRECT: `PUSH_ROUTE_TO_REDIRECT`
 };
 
 export const changeCity = (newCity) => ({
@@ -57,4 +58,9 @@ export const redirectToRoute = (url) => ({
 export const setUserName = (username) => ({
   type: ActionType.SET_USER_NAME,
   payload: username,
+});
+
+export const pushRouteToRedirect = (route) => ({
+  type: ActionType.PUSH_ROUTE_TO_REDIRECT,
+  payload: route,
 });

@@ -10,12 +10,7 @@ const withUserInput = (Component) => {
         review: ``
       };
 
-      this.handleSubmit = this.handleSubmit.bind(this);
       this.handleFieldChange = this.handleFieldChange.bind(this);
-    }
-
-    handleSubmit(evt) {
-      evt.preventDefault();
     }
 
     handleFieldChange(evt) {
@@ -30,7 +25,7 @@ const withUserInput = (Component) => {
         <Component
           {...this.props}
           onFieldChange={this.handleFieldChange}
-          onSubmit={this.handleSubmit}
+          comment={this.state}
         />
       );
     }

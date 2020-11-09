@@ -8,7 +8,8 @@ const DEFAULT_SORT_TYPE = SortType.PRICE_HIGH_TO_LOW;
 const initialState = {
   city: DEFAULT_CITY,
   sortType: DEFAULT_SORT_TYPE,
-  activeOfferId: ``
+  activeOfferId: ``,
+  routeToRedirect: ``
 };
 
 const appState = (state = initialState, action) => {
@@ -26,6 +27,11 @@ const appState = (state = initialState, action) => {
     case ActionType.CHANGE_ACTIVE_OFFER:
       return extend(state, {
         activeOfferId: action.payload
+      });
+
+    case ActionType.PUSH_ROUTE_TO_REDIRECT:
+      return extend(state, {
+        routeToRedirect: action.payload
       });
   }
 
