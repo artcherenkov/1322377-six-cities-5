@@ -13,23 +13,32 @@ import Goods from "./components/goods/goods";
 import Host from "./components/host/host";
 import Header from "../header/header";
 import PremiumMark from "./components/premium-mark/premium-mark";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {fetchCommentsList} from "../../store/api-action";
 import {getCityOffers, getComments} from "../../store/reducers/app-data/selectors";
-import CommentProp from '../comment/comment.prop';
 
-import OfferCardProp from '../offer-card/offer-card.prop';
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import {pushRouteToRedirect, redirectToRoute} from "../../store/action";
 import browserHistory from "../../browser-history";
 
 const CommentFormWrapped = withUserInput(CommentForm);
 
+const getDataFromStore = ({activeOfferId}) => {
+  const offers = useSelector(getCityOffers);
+  const activeOffer = offers.find((_offer) => _offer.id.toString() === activeOfferId);
+  return {
+    offers,
+    activeOffer,
+    comments: useSelector(getComments),
+    isLoggedIn: useSelector(getAuthStatus),
+    username: useSelector(getUsername),
+  };
+};
+
 const OfferScreen = React.memo(function OfferScreen(props) {
   const offerId = props.match.params.id;
-  const {offers, comments, isLoggedIn, username} = props;
-  const offer = offers.find((_offer) => _offer.id.toString() === offerId);
-  const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = offer;
+  const {offers, activeOffer, comments, isLoggedIn, username} = getDataFromStore({activeOfferId: offerId});
+  const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = activeOffer;
 
   const dispatch = useDispatch();
 
@@ -43,13 +52,20 @@ const OfferScreen = React.memo(function OfferScreen(props) {
           dispatch(redirectToRoute(`/login`));
         }
       },
-      [dispatch]
+      [dispatch, isLoggedIn, AuthStatus, redirectToRoute, currentPath]
+  );
+
+  const loadComments = useCallback(
+      (id) => {
+        dispatch(fetchCommentsList(id));
+      },
+      [dispatch, offerId]
   );
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    props.loadComments(offerId);
+    loadComments(offerId);
   }, [offerId]);
 
   return (
@@ -115,26 +131,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
 });
 
 OfferScreen.propTypes = {
-  offers: PropTypes.arrayOf(OfferCardProp),
-  comments: PropTypes.arrayOf(CommentProp),
-  match: PropTypes.any,
-  loadComments: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired
+  match: PropTypes.any
 };
 
-const mapStateToProps = (state) => ({
-  offers: getCityOffers(state),
-  comments: getComments(state),
-  isLoggedIn: getAuthStatus(state),
-  username: getUsername(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadComments(id) {
-    dispatch(fetchCommentsList(id));
-  },
-});
-
-export {OfferScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);
+export default OfferScreen;
