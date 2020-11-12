@@ -29,7 +29,8 @@ export const login = ({login: email, password}) => (dispatch, getState, api) => 
     })
 );
 
-export const postComment = ({comment, rating}, id) => (dispatch, getState, api) => (
+export const postComment = ({comment, rating}, id, submitBtnRef) => (dispatch, getState, api) => (
   api.post(`/comments/${id}`, {comment, rating})
     .then(({data}) => dispatch(loadComments(data)))
+    .then(() => (submitBtnRef.disabled = false))
 );
