@@ -2,12 +2,11 @@ import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {nanoid} from "nanoid";
 
-import CommentForm from "../comment-form/comment-form.jsx";
+import CommentForm from "../comment-form/comment-form";
 import CommentsList from "../comment-list/comments-list";
 import Map from "../map/map";
 import {AuthStatus, MapType, OffersListType} from "../../const";
 import OffersList from "../offers-list/offers-list";
-import withUserInput from "../../hocs/with-user-input/with-user-input";
 import Features from "./components/features/features";
 import Goods from "./components/goods/goods";
 import Host from "./components/host/host";
@@ -20,8 +19,6 @@ import {getCityOffers, getComments} from "../../store/reducers/app-data/selector
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import {pushRouteToRedirect, redirectToRoute} from "../../store/action";
 import browserHistory from "../../browser-history";
-
-const CommentFormWrapped = withUserInput(CommentForm);
 
 const getDataFromStore = ({activeOfferId}) => {
   const offers = useSelector(getCityOffers);
@@ -113,7 +110,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
                   <span className="reviews__amount">{comments.length}</span>
                 </h2>
                 <CommentsList comments={comments}/>
-                {isLoggedIn === AuthStatus.AUTH && <CommentFormWrapped offerId={offerId}/>}
+                {isLoggedIn === AuthStatus.AUTH && <CommentForm offerId={offerId}/>}
               </section>
             </div>
           </div>
