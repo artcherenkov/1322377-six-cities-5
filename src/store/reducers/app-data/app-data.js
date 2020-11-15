@@ -23,10 +23,10 @@ const appData = (state = initialState, action) => {
         comments: action.payload.map((comment) => adaptCommentsToClient(comment))
       });
 
-    case ActionType.LOAD_CITY_OFFER_COMMENTS:
+    case ActionType.LOAD_ALL_COMMENTS:
       return extend(state, {
         allComments: action.payload,
-        cityOffers: state.cityOffers.map((offer) => Object.assign({}, offer, {
+        offers: state.offers.map((offer) => Object.assign({}, offer, {
           commentsLength: action.payload[offer.id].length
         }))
       });

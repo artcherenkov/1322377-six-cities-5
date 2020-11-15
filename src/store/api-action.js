@@ -1,7 +1,16 @@
-import {loadHotels, loadComments, changeAuthStatus, redirectToRoute, pushRouteToRedirect, loadCityOfferComments} from "./action";
+import {
+  loadHotels,
+  loadComments,
+  changeAuthStatus,
+  redirectToRoute,
+  pushRouteToRedirect,
+  loadCityOfferComments,
+  setCityOffers,
+} from "./action";
 import {AuthStatus} from "../const";
 import {getRouteToRedirect} from "./reducers/app-state/selectors";
 import {adaptCommentsToClient} from "../core/adapter/comments";
+import {getOffers} from "./reducers/app-data/selectors";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -13,7 +22,8 @@ export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadComments(data)))
 );
 
-export const fetchCityOffersCommentsList = (ids) => (dispatch, _getState, api) => {
+export const fetchCityOffersCommentsList = () => (dispatch, getState, api) => {
+  const ids = getOffers(getState()).reduce((acc, offer) => [...acc, offer.id], []);
   const promises = ids.reduce((acc, id) => {
     acc = [...acc, api.get(`/comments/${id}`)];
     return acc;
@@ -25,6 +35,7 @@ export const fetchCityOffersCommentsList = (ids) => (dispatch, _getState, api) =
         return acc;
       }, {});
       dispatch(loadCityOfferComments(result));
+      dispatch(setCityOffers());
     });
 };
 

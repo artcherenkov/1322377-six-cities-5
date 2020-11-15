@@ -15,7 +15,6 @@ import {getCity, getSortType} from "../../store/reducers/app-state/selectors";
 import {getCityOffers} from "../../store/reducers/app-data/selectors";
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import Header from "../header/header";
-import {fetchCityOffersCommentsList} from "../../store/api-action";
 
 const SortWrapped = withOptionsRollup(Sort);
 
@@ -28,22 +27,12 @@ const MainScreen = React.memo(function MainScreen() {
   const isLoggedIn = useSelector(getAuthStatus);
   const username = useSelector(getUsername);
 
-  const loadComments = useCallback(
-      (ids) => {
-        dispatch(fetchCityOffersCommentsList(ids));
-      },
-      [dispatch, city, sortType]
-  );
-
   const onCityChange = (newCity) => {
     dispatch(changeCity(newCity));
     dispatch(setCityOffers(newCity));
   };
 
   const onSortTypeChange = (newSortType) => {
-    if (newSortType === SortType.POPULAR) {
-      loadComments(cityOffers.reduce((acc, offer) => [...acc, offer.id], []));
-    }
     dispatch(changeSortType(newSortType));
   };
 
