@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import OffersList from "../offers-list/offers-list.jsx";
 import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
-import {MapType, OffersListType} from "../../const";
+import {MapType, OffersListType, SortType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
@@ -34,7 +34,6 @@ const MainScreen = React.memo(function MainScreen() {
       },
       [dispatch, city, sortType]
   );
-  loadComments(cityOffers.reduce((acc, offer) => [...acc, offer.id], []));
 
   const onCityChange = (newCity) => {
     dispatch(changeCity(newCity));
@@ -42,6 +41,9 @@ const MainScreen = React.memo(function MainScreen() {
   };
 
   const onSortTypeChange = (newSortType) => {
+    if (newSortType === SortType.POPULAR) {
+      loadComments(cityOffers.reduce((acc, offer) => [...acc, offer.id], []));
+    }
     dispatch(changeSortType(newSortType));
   };
 
