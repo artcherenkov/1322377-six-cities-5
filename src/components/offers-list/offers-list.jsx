@@ -15,6 +15,9 @@ const OffersList = (props) => {
   const {offers, offersListType} = props;
   const sortType = props.sortType || SortType.DEFAULT;
 
+  const exampleOffer = offers.find((offer) => offer.id === 4);
+  exampleOffer[`commentsLength`] = 0;
+
   const dispatch = useDispatch();
   const onCardHover = (newActiveType) => {
     dispatch(changeActiveOffer(newActiveType));

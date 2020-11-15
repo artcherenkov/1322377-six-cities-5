@@ -7,7 +7,8 @@ import {adaptCommentsToClient} from "../../../core/adapter/comments";
 const initialState = {
   offers: [],
   cityOffers: [],
-  comments: []
+  comments: [],
+  allComments: []
 };
 
 const appData = (state = initialState, action) => {
@@ -20,6 +21,14 @@ const appData = (state = initialState, action) => {
     case ActionType.LOAD_COMMENTS:
       return extend(state, {
         comments: action.payload.map((comment) => adaptCommentsToClient(comment))
+      });
+
+    case ActionType.LOAD_CITY_OFFER_COMMENTS:
+      return extend(state, {
+        allComments: action.payload,
+        offers: state.cityOffers.map((offer) => {
+          offer.commentsLength = action.payload[offer.id].length;
+        })
       });
 
     case ActionType.SET_CITY_OFFERS:

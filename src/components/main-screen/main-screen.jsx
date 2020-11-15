@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import classNames from 'classnames';
 
@@ -15,6 +15,7 @@ import {getCity, getSortType} from "../../store/reducers/app-state/selectors";
 import {getCityOffers} from "../../store/reducers/app-data/selectors";
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import Header from "../header/header";
+import {fetchCityOffersCommentsList} from "../../store/api-action";
 
 const SortWrapped = withOptionsRollup(Sort);
 
@@ -26,6 +27,14 @@ const MainScreen = React.memo(function MainScreen() {
   const sortType = useSelector(getSortType);
   const isLoggedIn = useSelector(getAuthStatus);
   const username = useSelector(getUsername);
+
+  const loadComments = useCallback(
+      (ids) => {
+        dispatch(fetchCityOffersCommentsList(ids));
+      },
+      [dispatch, city, sortType]
+  );
+  loadComments(cityOffers.reduce((acc, offer) => [...acc, offer.id], []));
 
   const onCityChange = (newCity) => {
     dispatch(changeCity(newCity));

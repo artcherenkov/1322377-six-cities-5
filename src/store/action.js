@@ -9,6 +9,7 @@ export const ActionType = {
   CHANGE_ACTIVE_OFFER: `CHANGE_ACTIVE_OFFER`,
   LOAD_OFFERS: `LOAD_OFFERS`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
+  LOAD_CITY_OFFER_COMMENTS: `LOAD_CITY_OFFER_COMMENTS`,
   CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   SET_USER_NAME: `SET_USER_NAME`,
@@ -42,6 +43,11 @@ export const loadHotels = (hotels) => ({
 
 export const loadComments = (comments) => ({
   type: ActionType.LOAD_COMMENTS,
+  payload: comments
+});
+
+export const loadCityOfferComments = (comments) => ({
+  type: ActionType.LOAD_CITY_OFFER_COMMENTS,
   payload: comments
 });
 
