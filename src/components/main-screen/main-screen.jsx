@@ -1,11 +1,11 @@
-import React, {useCallback} from "react";
+import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import classNames from 'classnames';
 
 import OffersList from "../offers-list/offers-list.jsx";
 import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
-import {MapType, OffersListType, SortType} from "../../const";
+import {MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
