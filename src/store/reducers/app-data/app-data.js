@@ -1,6 +1,6 @@
 import {extend} from "../../../utils/common";
 import {ActionType} from "../../action";
-import {getCityOffers} from "../../../core/core";
+import {getCityOffers, updateFavoriteOffers} from "../../../core/core";
 import {adaptOffersToClient} from "../../../core/adapter/offers";
 import {adaptCommentsToClient} from "../../../core/adapter/comments";
 
@@ -8,7 +8,8 @@ const initialState = {
   offers: [],
   cityOffers: [],
   comments: [],
-  allComments: []
+  allComments: [],
+  favorites: []
 };
 
 const appData = (state = initialState, action) => {
@@ -34,6 +35,17 @@ const appData = (state = initialState, action) => {
     case ActionType.SET_CITY_OFFERS:
       return extend(state, {
         cityOffers: getCityOffers(state.offers, action.payload)
+      });
+
+    case ActionType.TOGGLE_OFFER_TO_FAVORITE:
+      const offers = state.offers.slice();
+      const cityOffers = state.cityOffers.slice();
+
+      const updatedArrays = updateFavoriteOffers(offers, cityOffers, action.payload);
+
+      return extend(state, {
+        offers: updatedArrays[0],
+        cityOffers: updatedArrays[1]
       });
   }
 

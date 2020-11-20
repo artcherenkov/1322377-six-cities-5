@@ -13,7 +13,8 @@ export const ActionType = {
   CHANGE_AUTH_STATUS: `CHANGE_AUTH_STATUS`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
   SET_USER_NAME: `SET_USER_NAME`,
-  PUSH_ROUTE_TO_REDIRECT: `PUSH_ROUTE_TO_REDIRECT`
+  PUSH_ROUTE_TO_REDIRECT: `PUSH_ROUTE_TO_REDIRECT`,
+  TOGGLE_OFFER_TO_FAVORITE: `TOGGLE_OFFER_TO_FAVORITE`,
 };
 
 export const changeCity = (newCity) => ({
@@ -24,6 +25,11 @@ export const changeCity = (newCity) => ({
 export const setCityOffers = (city = DEFAULT_CITY) => ({
   type: ActionType.SET_CITY_OFFERS,
   payload: city
+});
+
+export const toggleOfferToFavorite = (offer) => ({
+  type: ActionType.TOGGLE_OFFER_TO_FAVORITE,
+  payload: offer
 });
 
 export const changeSortType = (newSortType) => ({
