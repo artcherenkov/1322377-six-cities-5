@@ -5,7 +5,7 @@ import MainScreen from "../main-screen/main-screen.jsx";
 import FavoritesScreen from "../favorites-screen/favorites-screen.jsx";
 import LoginScreen from "../login-screen/login-screen.jsx";
 import OfferScreen from "../offer-screen/offer-screen.jsx";
-import OfferCardProp from '../offer-card/offer-card.prop';
+import OfferCardProp from '../offer-card-view/offer-card.prop';
 import PrivateRoute from "../private-route/private-route";
 import browserHistory from "../../browser-history";
 

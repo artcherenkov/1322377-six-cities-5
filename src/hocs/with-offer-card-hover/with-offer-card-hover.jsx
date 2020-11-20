@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from 'prop-types';
 
-import OfferCardProp from '../../components/offer-card/offer-card.prop';
+import OfferCardProp from '../../components/offer-card-view/offer-card.prop';
 
 const withOfferCardHover = (Component) => {
   class WithOfferCardHover extends PureComponent {

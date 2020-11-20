@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as leaflet from 'leaflet';
 
-import OfferCardProp from '../offer-card/offer-card.prop';
+import OfferCardProp from '../offer-card-view/offer-card.prop';
 import {connect} from "react-redux";
 import {getActiveOfferId} from "../../store/reducers/app-state/selectors";
 

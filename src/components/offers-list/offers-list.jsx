@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import OfferCard from "../offer-card/offer-card.jsx";
-import OfferCardProp from '../offer-card/offer-card.prop';
+import OfferCardView from "../offer-card-view/offer-card-view.jsx";
+import OfferCardProp from '../offer-card-view/offer-card.prop';
 import {sort} from "../../utils/sort";
 import {SortType} from "../../const";
 import {changeActiveOffer} from "../../store/action";
 import {useDispatch} from "react-redux";
 import withOfferCardHover from "../../hocs/with-offer-card-hover/with-offer-card-hover";
 
-const OfferCardWrapped = withOfferCardHover(OfferCard);
+const OfferCardWrapped = withOfferCardHover(OfferCardView);
 
 const OffersList = (props) => {
   const {offers, offersListType} = props;
