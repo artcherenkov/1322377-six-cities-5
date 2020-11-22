@@ -68,7 +68,7 @@ const OfferCardView = (props) => {
 
 OfferCardView.propTypes = {
   offer: OfferCardProp,
-  offers: PropTypes.arrayOf(OfferCardProp).isRequired,
+  onToFavoriteClick: PropTypes.func,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 };

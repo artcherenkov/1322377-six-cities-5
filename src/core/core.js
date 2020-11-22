@@ -8,14 +8,7 @@ export const getCityOffers = (offers, city) => {
   return [];
 };
 
-export const updateFavoriteOffers = (offers, cityOffers, offer) => {
-  return [offers, cityOffers].reduce((acc, arr, index) => {
-    arr
-      .find((_offer) => _offer.id === offer.id)
-      .isFavorite = offer.is_favorite;
-    acc = Object.assign({}, acc, {
-      [index]: arr
-    });
-    return acc;
-  }, {});
+export const updateFavoriteOffers = (offers, offer) => {
+  offers.find((_offer) => _offer.id === offer.id).isFavorite = offer.is_favorite;
+  return offers;
 };

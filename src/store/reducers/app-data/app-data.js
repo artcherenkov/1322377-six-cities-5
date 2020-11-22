@@ -44,13 +44,17 @@ const appData = (state = initialState, action) => {
 
     case ActionType.TOGGLE_OFFER_TO_FAVORITE:
       const offers = state.offers.slice();
-      const cityOffers = state.cityOffers.slice();
+      let cityOffers = state.cityOffers.slice();
 
-      const updatedArrays = updateFavoriteOffers(offers, cityOffers, action.payload);
+      const updatedOffers = updateFavoriteOffers(offers, action.payload);
+
+      if (cityOffers.some((offer) => offer.id === action.payload.id)) {
+        cityOffers = updateFavoriteOffers(cityOffers, action.payload);
+      }
 
       return extend(state, {
-        offers: updatedArrays[0],
-        cityOffers: updatedArrays[1]
+        offers: updatedOffers,
+        cityOffers
       });
   }
 

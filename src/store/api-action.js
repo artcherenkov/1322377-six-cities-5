@@ -70,4 +70,5 @@ export const fetchFavoritesList = () => (dispatch, _getState, api) => (
 export const toggleToFavorite = (hotelId, status) => (dispatch, getState, api) => (
   api.post(`/favorite/${hotelId}/${status}`)
     .then(({data}) => dispatch(toggleOfferToFavorite(data)))
+    .then(() => dispatch(fetchFavoritesList()))
 );
