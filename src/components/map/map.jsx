@@ -55,14 +55,16 @@ class Map extends React.PureComponent {
 
   setPins(offers, activeOfferId) {
     offers.map((offer) => {
-      const {city, id} = offer;
+      const {id} = offer;
       const isActive = id.toString() === activeOfferId;
-      this.setPin(city.location, {isActive});
+      this.setPin(offer.location, {isActive});
     });
   }
 
   componentDidUpdate() {
     const {offers, activeOfferId} = this.props;
+    const coords = Object.values(offers[0].city.location).slice(0, 2);
+    this.map.setView(new leaflet.LatLng(...coords), 13);
 
     this.resetPins();
     this.setPins(offers, activeOfferId);
