@@ -5,7 +5,7 @@ import {
   redirectToRoute,
   pushRouteToRedirect,
   loadCityOfferComments,
-  setCityOffers, toggleOfferToFavorite, loadFavoriteOffers,
+  setCityOffers, toggleOfferToFavorite, loadFavoriteOffers, loadOffersNearby,
 } from "./action";
 import {AuthStatus} from "../const";
 import {getRouteToRedirect} from "./reducers/app-state/selectors";
@@ -72,3 +72,8 @@ export const toggleToFavorite = (hotelId, status) => (dispatch, getState, api) =
     .then(({data}) => dispatch(toggleOfferToFavorite(data)))
     .then(() => dispatch(fetchFavoritesList()))
 );
+
+export const fetchHotelsNearby = (offerId) => (dispatch, getState, api) => {
+  api.get(`hotels/${offerId}/nearby`)
+    .then(({data}) => dispatch(loadOffersNearby(data)));
+};

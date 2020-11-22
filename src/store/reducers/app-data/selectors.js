@@ -7,3 +7,4 @@ export const getComments = createSelector(
     (comments) => comments
 );
 export const getFavoriteOffers = (state) => state.DATA.favorites;
+export const getOffersNearby = (state) => state.DATA.offersNearby;

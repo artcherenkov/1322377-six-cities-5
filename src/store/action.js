@@ -15,7 +15,8 @@ export const ActionType = {
   SET_USER_NAME: `SET_USER_NAME`,
   PUSH_ROUTE_TO_REDIRECT: `PUSH_ROUTE_TO_REDIRECT`,
   TOGGLE_OFFER_TO_FAVORITE: `TOGGLE_OFFER_TO_FAVORITE`,
-  LOAD_FAVORITE_OFFERS: `LOAD_FAVORITE_OFFERS`
+  LOAD_FAVORITE_OFFERS: `LOAD_FAVORITE_OFFERS`,
+  LOAD_OFFERS_NEARBY: `LOAD_OFFERS_NEARBY`
 };
 
 export const changeCity = (newCity) => ({
@@ -82,4 +83,9 @@ export const setUserName = (username) => ({
 export const pushRouteToRedirect = (route) => ({
   type: ActionType.PUSH_ROUTE_TO_REDIRECT,
   payload: route,
+});
+
+export const loadOffersNearby = (offerId) => ({
+  type: ActionType.LOAD_OFFERS_NEARBY,
+  payload: offerId,
 });

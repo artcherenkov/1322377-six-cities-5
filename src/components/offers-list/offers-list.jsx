@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import OfferCardView from "../offer-card-view/offer-card-view.jsx";
 import OfferCardProp from '../offer-card-view/offer-card.prop';
 import {sort} from "../../utils/sort";
-import {SortType} from "../../const";
+import {OffersListType, SortType} from "../../const";
 import {changeActiveOffer} from "../../store/action";
 import {useDispatch} from "react-redux";
 import withOfferCardHover from "../../hocs/with-offer-card-hover/with-offer-card-hover";
@@ -17,7 +17,10 @@ const OffersList = (props) => {
 
   const dispatch = useDispatch();
   const onCardHover = (newActiveType) => {
-    dispatch(changeActiveOffer(newActiveType));
+    if (offersListType === OffersListType.CITIES) {
+      dispatch(changeActiveOffer(newActiveType));
+    }
+    return false;
   };
 
   return (

@@ -9,7 +9,8 @@ const initialState = {
   cityOffers: [],
   comments: [],
   allComments: [],
-  favorites: []
+  favorites: [],
+  offersNearby: []
 };
 
 const appData = (state = initialState, action) => {
@@ -45,6 +46,7 @@ const appData = (state = initialState, action) => {
     case ActionType.TOGGLE_OFFER_TO_FAVORITE:
       const offers = state.offers.slice();
       let cityOffers = state.cityOffers.slice();
+      let offersNearby = state.offersNearby.slice();
 
       const updatedOffers = updateFavoriteOffers(offers, action.payload);
 
@@ -52,9 +54,19 @@ const appData = (state = initialState, action) => {
         cityOffers = updateFavoriteOffers(cityOffers, action.payload);
       }
 
+      if (offersNearby.some((offer) => offer.id === action.payload.id)) {
+        offersNearby = updateFavoriteOffers(offersNearby, action.payload);
+      }
+
       return extend(state, {
         offers: updatedOffers,
-        cityOffers
+        cityOffers,
+        offersNearby
+      });
+
+    case ActionType.LOAD_OFFERS_NEARBY:
+      return extend(state, {
+        offersNearby: action.payload.map((offer) => adaptOffersToClient(offer))
       });
   }
 

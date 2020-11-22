@@ -13,8 +13,8 @@ import Host from "./components/host/host";
 import Header from "../header/header";
 import PremiumMark from "./components/premium-mark/premium-mark";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchCommentsList} from "../../store/api-action";
-import {getCityOffers, getComments} from "../../store/reducers/app-data/selectors";
+import {fetchCommentsList, fetchHotelsNearby} from "../../store/api-action";
+import {getCityOffers, getComments, getOffersNearby} from "../../store/reducers/app-data/selectors";
 
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import {pushRouteToRedirect, redirectToRoute} from "../../store/action";
@@ -24,7 +24,7 @@ const getDataFromStore = ({activeOfferId}) => {
   const offers = useSelector(getCityOffers);
   const activeOffer = offers.find((_offer) => _offer.id.toString() === activeOfferId);
   return {
-    offers,
+    offers: useSelector(getOffersNearby),
     activeOffer,
     comments: useSelector(getComments),
     isLoggedIn: useSelector(getAuthStatus),
@@ -33,13 +33,27 @@ const getDataFromStore = ({activeOfferId}) => {
 };
 
 const OfferScreen = React.memo(function OfferScreen(props) {
+  const dispatch = useDispatch();
   const offerId = props.match.params.id;
   const {offers, activeOffer, comments, isLoggedIn, username} = getDataFromStore({activeOfferId: offerId});
   const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = activeOffer;
 
-  const dispatch = useDispatch();
-
   const currentPath = browserHistory.location.pathname;
+
+  const loadOffersNearby = useCallback(
+      (_offerId) => {
+        dispatch(fetchHotelsNearby(_offerId));
+      },
+      [offerId]
+  );
+
+  const loadComments = useCallback(
+      (id) => {
+        dispatch(fetchCommentsList(id));
+      },
+      [dispatch, offerId]
+  );
+
   const onToBookmarkClick = useCallback(
       () => {
         dispatch(pushRouteToRedirect(currentPath));
@@ -52,17 +66,11 @@ const OfferScreen = React.memo(function OfferScreen(props) {
       [dispatch, isLoggedIn, AuthStatus, redirectToRoute, currentPath]
   );
 
-  const loadComments = useCallback(
-      (id) => {
-        dispatch(fetchCommentsList(id));
-      },
-      [dispatch, offerId]
-  );
-
   useEffect(() => {
     window.scrollTo(0, 0);
 
     loadComments(offerId);
+    loadOffersNearby(offerId);
   }, [offerId]);
 
   return (
