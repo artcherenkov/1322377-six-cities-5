@@ -5,7 +5,7 @@ import {
   redirectToRoute,
   pushRouteToRedirect,
   loadCityOfferComments,
-  setCityOffers, toggleOfferToFavorite,
+  setCityOffers, toggleOfferToFavorite, loadFavoriteOffers,
 } from "./action";
 import {AuthStatus} from "../const";
 import {getRouteToRedirect} from "./reducers/app-state/selectors";
@@ -64,7 +64,7 @@ export const postComment = ({comment, rating}, id, submitBtnRef) => (dispatch, g
 
 export const fetchFavoritesList = () => (dispatch, _getState, api) => (
   api.get(`/favorite`)
-    .then(({data}) => dispatch(toggleOfferToFavorite(data)))
+    .then(({data}) => dispatch(loadFavoriteOffers(data)))
 );
 
 export const toggleToFavorite = (hotelId, status) => (dispatch, getState, api) => (

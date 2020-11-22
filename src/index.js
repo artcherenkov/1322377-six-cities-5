@@ -8,7 +8,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 
 import App from "./components/app/app.jsx";
 import rootReducer from './store/reducers/root-reducer';
-import {checkAuth, fetchCityOffersCommentsList, fetchOffersList} from "./store/api-action";
+import {checkAuth, fetchCityOffersCommentsList, fetchFavoritesList, fetchOffersList} from "./store/api-action";
 import {changeAuthStatus, setCityOffers} from "./store/action";
 import {AuthStatus} from "./const";
 import {redirect} from "./store/middlewares/redirect";
@@ -27,7 +27,8 @@ const store = createStore(
 
 Promise.all([
   store.dispatch(fetchOffersList()),
-  store.dispatch(checkAuth())
+  store.dispatch(checkAuth()),
+  store.dispatch(fetchFavoritesList())
 ])
   .then(() => store.dispatch(fetchCityOffersCommentsList()))
   .then(() => store.dispatch(setCityOffers()))

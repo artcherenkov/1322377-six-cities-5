@@ -6,3 +6,4 @@ export const getComments = createSelector(
     (state) => state.DATA.comments,
     (comments) => comments
 );
+export const getFavoriteOffers = (state) => state.DATA.favorites;

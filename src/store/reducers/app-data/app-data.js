@@ -37,6 +37,11 @@ const appData = (state = initialState, action) => {
         cityOffers: getCityOffers(state.offers, action.payload)
       });
 
+    case ActionType.LOAD_FAVORITE_OFFERS:
+      return extend(state, {
+        favorites: action.payload.map((offer) => adaptOffersToClient(offer))
+      });
+
     case ActionType.TOGGLE_OFFER_TO_FAVORITE:
       const offers = state.offers.slice();
       const cityOffers = state.cityOffers.slice();
