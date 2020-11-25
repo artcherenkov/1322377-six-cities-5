@@ -4,8 +4,7 @@ import * as leaflet from 'leaflet';
 
 import OfferCardProp from '../offer-card-view/offer-card.prop';
 import {connect} from "react-redux";
-import {getActiveOfferId, getCity} from "../../store/reducers/app-state/selectors";
-import {MapType} from "../../const";
+import {getActiveOfferId} from "../../store/reducers/app-state/selectors";
 
 const ICON = leaflet.icon({
   iconUrl: `img/pin.svg`,
