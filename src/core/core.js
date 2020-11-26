@@ -7,3 +7,8 @@ export const getCityOffers = (offers, city) => {
 
   return [];
 };
+
+export const updateFavoriteOffers = (offers, offer) => {
+  offers.find((_offer) => _offer.id === offer.id).isFavorite = offer.is_favorite;
+  return offers;
+};

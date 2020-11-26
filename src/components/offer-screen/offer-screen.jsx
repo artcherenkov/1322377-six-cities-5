@@ -2,38 +2,59 @@ import React, {useCallback, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {nanoid} from "nanoid";
 
-import CommentForm from "../comment-form/comment-form.jsx";
+import CommentForm from "../comment-form/comment-form";
 import CommentsList from "../comment-list/comments-list";
 import Map from "../map/map";
 import {AuthStatus, MapType, OffersListType} from "../../const";
 import OffersList from "../offers-list/offers-list";
-import withUserInput from "../../hocs/with-user-input/with-user-input";
 import Features from "./components/features/features";
 import Goods from "./components/goods/goods";
 import Host from "./components/host/host";
 import Header from "../header/header";
 import PremiumMark from "./components/premium-mark/premium-mark";
-import {connect, useDispatch} from "react-redux";
-import {fetchCommentsList} from "../../store/api-action";
-import {getCityOffers, getComments} from "../../store/reducers/app-data/selectors";
-import CommentProp from '../comment/comment.prop';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchCommentsList, fetchHotelsNearby} from "../../store/api-action";
+import {getCityOffers, getComments, getOffersNearby} from "../../store/reducers/app-data/selectors";
 
-import OfferCardProp from '../offer-card/offer-card.prop';
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
-import {pushRouteToRedirect, redirectToRoute} from "../../store/action";
+import {changeActiveOffer, pushRouteToRedirect, redirectToRoute} from "../../store/action";
 import browserHistory from "../../browser-history";
 
-const CommentFormWrapped = withUserInput(CommentForm);
+const getDataFromStore = ({activeOfferId}) => {
+  const offers = useSelector(getCityOffers);
+  const activeOffer = offers.find((_offer) => _offer.id.toString() === activeOfferId);
+  return {
+    offers: useSelector(getOffersNearby),
+    activeOffer,
+    comments: useSelector(getComments),
+    isLoggedIn: useSelector(getAuthStatus),
+    username: useSelector(getUsername),
+  };
+};
 
 const OfferScreen = React.memo(function OfferScreen(props) {
-  const offerId = props.match.params.id;
-  const {offers, comments, isLoggedIn, username} = props;
-  const offer = offers.find((_offer) => _offer.id.toString() === offerId);
-  const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = offer;
-
   const dispatch = useDispatch();
+  const offerId = props.match.params.id;
+  const {offers, activeOffer, comments, isLoggedIn, username} = getDataFromStore({activeOfferId: offerId});
+  const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = activeOffer;
+  dispatch(changeActiveOffer(``));
 
   const currentPath = browserHistory.location.pathname;
+
+  const loadOffersNearby = useCallback(
+      (_offerId) => {
+        dispatch(fetchHotelsNearby(_offerId));
+      },
+      [offerId]
+  );
+
+  const loadComments = useCallback(
+      (id) => {
+        dispatch(fetchCommentsList(id));
+      },
+      [dispatch, offerId]
+  );
+
   const onToBookmarkClick = useCallback(
       () => {
         dispatch(pushRouteToRedirect(currentPath));
@@ -43,13 +64,14 @@ const OfferScreen = React.memo(function OfferScreen(props) {
           dispatch(redirectToRoute(`/login`));
         }
       },
-      [dispatch]
+      [dispatch, isLoggedIn, AuthStatus, redirectToRoute, currentPath]
   );
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    props.loadComments(offerId);
+    loadComments(offerId);
+    loadOffersNearby(offerId);
   }, [offerId]);
 
   return (
@@ -97,11 +119,11 @@ const OfferScreen = React.memo(function OfferScreen(props) {
                   <span className="reviews__amount">{comments.length}</span>
                 </h2>
                 <CommentsList comments={comments}/>
-                {isLoggedIn === AuthStatus.AUTH && <CommentFormWrapped offerId={offerId}/>}
+                {isLoggedIn === AuthStatus.AUTH && <CommentForm offerId={offerId}/>}
               </section>
             </div>
           </div>
-          <Map offers={offers} cardType={MapType.PROPERTY}/>
+          <Map offers={[...offers, activeOffer]} offerId={offerId} activeOfferId={activeOffer} cardType={MapType.PROPERTY}/>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -115,26 +137,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
 });
 
 OfferScreen.propTypes = {
-  offers: PropTypes.arrayOf(OfferCardProp),
-  comments: PropTypes.arrayOf(CommentProp),
-  match: PropTypes.any,
-  loadComments: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired
+  match: PropTypes.any
 };
 
-const mapStateToProps = (state) => ({
-  offers: getCityOffers(state),
-  comments: getComments(state),
-  isLoggedIn: getAuthStatus(state),
-  username: getUsername(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadComments(id) {
-    dispatch(fetchCommentsList(id));
-  },
-});
-
-export {OfferScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);
+export default OfferScreen;

@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import OfferCard from "../offer-card/offer-card.jsx";
-import OfferCardProp from '../offer-card/offer-card.prop';
+import OfferCardView from "../offer-card-view/offer-card-view.jsx";
+import OfferCardProp from '../offer-card-view/offer-card.prop';
 import {sort} from "../../utils/sort";
-import {SortType} from "../../const";
+import {OffersListType, SortType} from "../../const";
 import {changeActiveOffer} from "../../store/action";
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 import withOfferCardHover from "../../hocs/with-offer-card-hover/with-offer-card-hover";
 
-const OfferCardWrapped = withOfferCardHover(OfferCard);
+const OfferCardWrapped = withOfferCardHover(OfferCardView);
 
 const OffersList = (props) => {
-  const {offers, offersListType, onCardHover} = props;
+  const {offers, offersListType} = props;
   const sortType = props.sortType || SortType.DEFAULT;
+
+  const dispatch = useDispatch();
+  const onCardHover = (newActiveType) => {
+    if (offersListType === OffersListType.CITIES) {
+      dispatch(changeActiveOffer(newActiveType));
+    }
+    return false;
+  };
 
   return (
     <div className={offersListType + ` places__list`}>
@@ -24,19 +32,10 @@ const OffersList = (props) => {
   );
 };
 
-
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(OfferCardProp).isRequired,
   offersListType: PropTypes.string.isRequired,
-  sortType: PropTypes.string,
-  onCardHover: PropTypes.func.isRequired
+  sortType: PropTypes.string
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onCardHover(newActiveType) {
-    dispatch(changeActiveOffer(newActiveType));
-  }
-});
-
-export {OffersList};
-export default connect(() => ({}), mapDispatchToProps)(OffersList);
+export default OffersList;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as leaflet from 'leaflet';
 
-import OfferCardProp from '../offer-card/offer-card.prop';
+import OfferCardProp from '../offer-card-view/offer-card.prop';
 import {connect} from "react-redux";
 import {getActiveOfferId} from "../../store/reducers/app-state/selectors";
 
@@ -55,27 +55,34 @@ class Map extends React.PureComponent {
 
   setPins(offers, activeOfferId) {
     offers.map((offer) => {
-      const {city, id} = offer;
+      const {id} = offer;
       const isActive = id.toString() === activeOfferId;
-      this.setPin(city.location, {isActive});
+      this.setPin(offer.location, {isActive});
     });
   }
 
   componentDidUpdate() {
-    const {offers, activeOfferId} = this.props;
+    const {offers, activeOfferId, offerId} = this.props;
+    const {location} = offers[0].city;
+
+    const city = Object.values(location).slice(0, 2);
+    const zoom = Object.values(location).slice(2).flat();
+
+    this.map.setView(new leaflet.LatLng(...city), zoom);
 
     this.resetPins();
-    this.setPins(offers, activeOfferId);
+    this.setPins(offers, activeOfferId || offerId);
   }
 
   componentDidMount() {
-    const {offers, activeOfferId} = this.props;
+    const {offers, activeOfferId, offerId} = this.props;
+    const {location} = offers[0].city;
 
-    const city = [52.38333, 4.9];
-    const zoom = 12;
+    const city = Object.values(location).slice(0, 2);
+    const zoom = Object.values(location).slice(2).flat();
 
     this.initMap(city, zoom);
-    this.setPins(offers, activeOfferId);
+    this.setPins(offers, activeOfferId || offerId);
   }
 
   render() {
@@ -85,12 +92,13 @@ class Map extends React.PureComponent {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(OfferCardProp).isRequired,
+  offerId: PropTypes.string,
   cardType: PropTypes.string.isRequired,
   activeOfferId: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  activeOfferId: getActiveOfferId(state)
+  activeOfferId: getActiveOfferId(state),
 });
 
 export {Map};

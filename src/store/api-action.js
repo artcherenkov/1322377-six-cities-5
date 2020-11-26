@@ -1,6 +1,16 @@
-import {loadHotels, loadComments, changeAuthStatus, redirectToRoute, pushRouteToRedirect} from "./action";
+import {
+  loadHotels,
+  loadComments,
+  changeAuthStatus,
+  redirectToRoute,
+  pushRouteToRedirect,
+  loadCityOfferComments,
+  setCityOffers, toggleOfferToFavorite, loadFavoriteOffers, loadOffersNearby,
+} from "./action";
 import {AuthStatus} from "../const";
 import {getRouteToRedirect} from "./reducers/app-state/selectors";
+import {adaptCommentsToClient} from "../core/adapter/comments";
+import {getOffers} from "./reducers/app-data/selectors";
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
@@ -11,6 +21,23 @@ export const fetchCommentsList = (id) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`)
     .then(({data}) => dispatch(loadComments(data)))
 );
+
+export const fetchCityOffersCommentsList = () => (dispatch, getState, api) => {
+  const ids = getOffers(getState()).reduce((acc, offer) => [...acc, offer.id], []);
+  const promises = ids.reduce((acc, id) => {
+    acc = [...acc, api.get(`/comments/${id}`)];
+    return acc;
+  }, []);
+  Promise.all(promises)
+    .then((res) => {
+      const result = res.reduce((acc, {data}, i) => {
+        acc = Object.assign({}, acc, {[ids[i]]: data.map((offer) => adaptCommentsToClient(offer))});
+        return acc;
+      }, {});
+      dispatch(loadCityOfferComments(result));
+      dispatch(setCityOffers());
+    });
+};
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
@@ -29,7 +56,24 @@ export const login = ({login: email, password}) => (dispatch, getState, api) => 
     })
 );
 
-export const postComment = ({comment, rating}, id) => (dispatch, getState, api) => (
+export const postComment = ({comment, rating}, id, submitBtnRef) => (dispatch, getState, api) => (
   api.post(`/comments/${id}`, {comment, rating})
     .then(({data}) => dispatch(loadComments(data)))
+    .then(() => (submitBtnRef.disabled = false))
 );
+
+export const fetchFavoritesList = () => (dispatch, _getState, api) => (
+  api.get(`/favorite`)
+    .then(({data}) => dispatch(loadFavoriteOffers(data)))
+);
+
+export const toggleToFavorite = (hotelId, status) => (dispatch, getState, api) => (
+  api.post(`/favorite/${hotelId}/${status}`)
+    .then(({data}) => dispatch(toggleOfferToFavorite(data)))
+    .then(() => dispatch(fetchFavoritesList()))
+);
+
+export const fetchHotelsNearby = (offerId) => (dispatch, getState, api) => {
+  api.get(`hotels/${offerId}/nearby`)
+    .then(({data}) => dispatch(loadOffersNearby(data)));
+};

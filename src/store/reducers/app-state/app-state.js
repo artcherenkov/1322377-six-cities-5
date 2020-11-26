@@ -3,7 +3,7 @@ import {Cities, SortType} from "../../../const";
 import {ActionType} from "../../action";
 
 const DEFAULT_CITY = Cities.AMSTERDAM;
-const DEFAULT_SORT_TYPE = SortType.PRICE_HIGH_TO_LOW;
+const DEFAULT_SORT_TYPE = SortType.POPULAR;
 
 const initialState = {
   city: DEFAULT_CITY,

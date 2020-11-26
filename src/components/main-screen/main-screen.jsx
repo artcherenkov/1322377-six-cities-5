@@ -1,27 +1,40 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import {connect} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import classNames from 'classnames';
 
 import OffersList from "../offers-list/offers-list.jsx";
 import NoOffers from "../no-offers/no-offers";
 import Map from "../map/map";
-import OfferCardProp from '../offer-card/offer-card.prop';
 import {MapType, OffersListType} from "../../const";
 import CitiesList from "../cities-list/cities-list";
 import {toCamelCase} from "../../utils/common";
 import Sort from "../sort/sort";
 import withOptionsRollup from "../../hocs/with-options-rollup/with-options-rollup";
 import {changeCity, changeSortType, setCityOffers} from "../../store/action";
-import {getActiveOfferId, getCity, getSortType} from "../../store/reducers/app-state/selectors";
-import {getOffers, getCityOffers} from "../../store/reducers/app-data/selectors";
+import {getCity, getSortType} from "../../store/reducers/app-state/selectors";
+import {getCityOffers} from "../../store/reducers/app-data/selectors";
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import Header from "../header/header";
 
 const SortWrapped = withOptionsRollup(Sort);
 
-const MainScreen = React.memo(function MainScreen(props) {
-  const {city, cityOffers, sortType, onCityChange, onSortTypeChange, isLoggedIn, username} = props;
+const MainScreen = React.memo(function MainScreen() {
+  const dispatch = useDispatch();
+
+  const city = useSelector(getCity);
+  const cityOffers = useSelector(getCityOffers);
+  const sortType = useSelector(getSortType);
+  const isLoggedIn = useSelector(getAuthStatus);
+  const username = useSelector(getUsername);
+
+  const onCityChange = (newCity) => {
+    dispatch(changeCity(newCity));
+    dispatch(setCityOffers(newCity));
+  };
+
+  const onSortTypeChange = (newSortType) => {
+    dispatch(changeSortType(newSortType));
+  };
 
   const getMainClassNames = () => {
     return classNames({
@@ -56,36 +69,4 @@ const MainScreen = React.memo(function MainScreen(props) {
   );
 });
 
-MainScreen.propTypes = {
-  offers: PropTypes.arrayOf(OfferCardProp).isRequired,
-  cityOffers: PropTypes.arrayOf(OfferCardProp).isRequired,
-  city: PropTypes.string.isRequired,
-  onCityChange: PropTypes.func.isRequired,
-  onSortTypeChange: PropTypes.func.isRequired,
-  sortType: PropTypes.string.isRequired,
-  isLoggedIn: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  city: getCity(state),
-  offers: getOffers(state),
-  cityOffers: getCityOffers(state),
-  sortType: getSortType(state),
-  activeOffer: getActiveOfferId(state),
-  isLoggedIn: getAuthStatus(state),
-  username: getUsername(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onCityChange(newCity) {
-    dispatch(changeCity(newCity));
-    dispatch(setCityOffers(newCity));
-  },
-  onSortTypeChange(newSortType) {
-    dispatch(changeSortType(newSortType));
-  }
-});
-
-export {MainScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+export default MainScreen;
