@@ -123,7 +123,7 @@ const OfferScreen = React.memo(function OfferScreen(props) {
               </section>
             </div>
           </div>
-          <Map offers={[...offers, activeOffer]} offerId={offerId} activeOfferId={activeOffer} cardType={MapType.PROPERTY}/>
+          <Map cityOffers={[...offers, activeOffer]} offerId={offerId} mapType={MapType.PROPERTY} />
         </section>
         <div className="container">
           <section className="near-places places">
