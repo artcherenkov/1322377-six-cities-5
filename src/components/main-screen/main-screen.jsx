@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {useSelector, useDispatch} from "react-redux";
 import classNames from 'classnames';
 
@@ -15,15 +16,18 @@ import {getCity, getSortType} from "../../store/reducers/app-state/selectors";
 import {getCityOffers} from "../../store/reducers/app-data/selectors";
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
 import Header from "../header/header";
+import OfferProp from "../offer-card-view/offer-card.prop";
 
 const SortWrapped = withOptionsRollup(Sort);
 
-const MainScreen = React.memo(function MainScreen() {
+const MainScreen = React.memo(function MainScreen(
+    {city, cityOffers, sortType}
+) {
   const dispatch = useDispatch();
 
-  const city = useSelector(getCity);
-  const cityOffers = useSelector(getCityOffers);
-  const sortType = useSelector(getSortType);
+  city = city || useSelector(getCity);
+  cityOffers = cityOffers || useSelector(getCityOffers);
+  sortType = sortType || useSelector(getSortType);
   const isLoggedIn = useSelector(getAuthStatus);
   const username = useSelector(getUsername);
 
@@ -59,7 +63,7 @@ const MainScreen = React.memo(function MainScreen() {
                 <OffersList offers={cityOffers} offersListType={OffersListType.CITIES} sortType={sortType} />
               </section>
               <div className="cities__right-section">
-                <Map offers={cityOffers} cardType={MapType.CITIES} />
+                <Map cityOffers={cityOffers} mapType={MapType.CITIES} />
               </div>
             </div>
             : <NoOffers city={city} />}
@@ -68,5 +72,11 @@ const MainScreen = React.memo(function MainScreen() {
     </div>
   );
 });
+
+MainScreen.propTypes = {
+  city: PropTypes.string,
+  cityOffers: PropTypes.arrayOf(OfferProp),
+  sortType: PropTypes.string
+};
 
 export default MainScreen;

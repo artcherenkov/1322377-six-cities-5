@@ -1,18 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import OfferListView from "../offer-list-view/offer-list-view";
 import {getFavoriteOffers} from "../../store/reducers/app-data/selectors";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchFavoritesList} from "../../store/api-action";
 import Header from "../header/header";
 import {getAuthStatus, getUsername} from "../../store/reducers/app-user/selectors";
+import offerCardProp from "../offer-card-view/offer-card.prop";
 
-const FavoritesScreen = () => {
+const FavoritesScreen = ({favoriteOffers}) => {
   const dispatch = useDispatch();
 
   const loadFavorites = () => () => dispatch(fetchFavoritesList());
   loadFavorites();
 
-  const offers = useSelector(getFavoriteOffers);
+  const offers = favoriteOffers || useSelector(getFavoriteOffers);
   const isLoggedIn = useSelector(getAuthStatus);
   const username = useSelector(getUsername);
 
@@ -57,6 +59,10 @@ const FavoritesScreen = () => {
       </a>
     </footer>
   </div>);
+};
+
+FavoritesScreen.propTypes = {
+  favoriteOffers: PropTypes.arrayOf(offerCardProp)
 };
 
 export default FavoritesScreen;
