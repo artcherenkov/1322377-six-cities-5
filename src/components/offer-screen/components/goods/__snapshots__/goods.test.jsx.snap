@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Goods is rendered correctly 1`] = `
+<div
+  className="property__inside"
+>
+  <h2
+    className="property__inside-title"
+  >
+    What's inside
+  </h2>
+  <ul
+    className="property__inside-list"
+  >
+    <li
+      className="property__inside-item"
+    >
+      Laptop friendly workspace
+    </li>
+    <li
+      className="property__inside-item"
+    >
+      Washer
+    </li>
+    <li
+      className="property__inside-item"
+    >
+      Towels
+    </li>
+    <li
+      className="property__inside-item"
+    >
+      Fridge
+    </li>
+    <li
+      className="property__inside-item"
+    >
+      Air conditioning
+    </li>
+    <li
+      className="property__inside-item"
+    >
+      Baby seat
+    </li>
+    <li
+      className="property__inside-item"
+    >
+      Breakfast
+    </li>
+  </ul>
+</div>
+`;

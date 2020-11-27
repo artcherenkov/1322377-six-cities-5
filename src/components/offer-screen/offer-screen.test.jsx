@@ -1,11 +1,11 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import React from "react";
+import renderer from "react-test-renderer";
+import {BrowserRouter} from "react-router-dom";
+import OfferScreen from "./offer-screen";
 import {Provider} from 'react-redux';
 import rootReducer from '../../store/reducers/root-reducer';
 import {createStore} from "redux";
-
-import FavoritesScreen from './favorites-screen';
-import {BrowserRouter} from "react-router-dom";
+import {AuthStatus} from "../../const";
 
 const offers = [
   {
@@ -129,36 +129,55 @@ const offers = [
   },
 ];
 
-const initState = {
+const comments = [
+  {
+    comment: `The house is very good, very happy, hygienic and simple living conditions around it are also very good. I hope to have the opportunity to come back. Thank you.`,
+    date: `2020-11-05T13:38:44.753Z`,
+    id: 1,
+    rating: 4,
+    user: {
+      avatarUrl: `https://assets.htmlacademy.ru/intensives/javascript-3/avatar/7.jpg`,
+      id: 16,
+      isPro: true,
+      name: `Mollie`,
+    },
+  }, {
+    comment: `The house is very good, very happy, hygienic and simple living conditions around it are also very good. I hope to have the opportunity to come back. Thank you.`,
+    date: `2020-11-05T13:38:44.753Z`,
+    id: 5,
+    rating: 4,
+    user: {
+      avatarUrl: `https://assets.htmlacademy.ru/intensives/javascript-3/avatar/7.jpg`,
+      id: 78,
+      isPro: true,
+      name: `Mollie`,
+    },
+  },
+];
+
+const initialState = {
+  DATA: {
+    cityOffers: offers,
+    offersNearby: offers,
+    comments,
+  },
   USER: {
-    authStatus: `AUTH`,
-    username: `Hello`
-  }
+    authStatus: AuthStatus.AUTH,
+    username: `username`,
+  },
 };
 
-describe(`FavoritesScreen is rendered correctly`, () => {
-  it(`FavoritesScreen no authorization is rendered correctly`, () => {
-    const store = createStore(rootReducer);
-    const tree = renderer.create(
+it(`OfferScreen is rendered correctly`, () => {
+  const store = createStore(rootReducer, initialState);
+  const tree = renderer
+    .create(
         <Provider store={store}>
           <BrowserRouter>
-            <FavoritesScreen favoriteOffers={offers}/>
+            <OfferScreen id={`1`} />
           </BrowserRouter>
         </Provider>
-    ).toJSON();
+    )
+    .toJSON();
 
-    expect(tree).toMatchSnapshot();
-  });
-  it(`FavoritesScreen with authorization is rendered correctly`, () => {
-    const store = createStore(rootReducer, initState);
-    const tree = renderer.create(
-        <Provider store={store}>
-          <BrowserRouter>
-            <FavoritesScreen favoriteOffers={offers}/>
-          </BrowserRouter>
-        </Provider>
-    ).toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
+  expect(tree).toMatchSnapshot();
 });

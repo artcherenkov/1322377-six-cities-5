@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {toCamelCase} from "../../utils/common";
 
-const NoOffers = (props) => {
-  const {city} = props;
-
+const NoOffers = ({city}) => {
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">

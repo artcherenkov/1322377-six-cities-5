@@ -1,11 +1,11 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import React from "react";
+import renderer from "react-test-renderer";
+import {BrowserRouter} from "react-router-dom";
+import OffersList from "./offers-list";
 import {Provider} from 'react-redux';
 import rootReducer from '../../store/reducers/root-reducer';
 import {createStore} from "redux";
-
-import FavoritesScreen from './favorites-screen';
-import {BrowserRouter} from "react-router-dom";
+import {OffersListType} from "../../const";
 
 const offers = [
   {
@@ -129,36 +129,17 @@ const offers = [
   },
 ];
 
-const initState = {
-  USER: {
-    authStatus: `AUTH`,
-    username: `Hello`
-  }
-};
-
-describe(`FavoritesScreen is rendered correctly`, () => {
-  it(`FavoritesScreen no authorization is rendered correctly`, () => {
-    const store = createStore(rootReducer);
-    const tree = renderer.create(
+it(`OffersList is rendered correctly`, () => {
+  const store = createStore(rootReducer);
+  const tree = renderer
+    .create(
         <Provider store={store}>
           <BrowserRouter>
-            <FavoritesScreen favoriteOffers={offers}/>
+            <OffersList offers={offers} offersListType={OffersListType.CITIES}/>
           </BrowserRouter>
         </Provider>
-    ).toJSON();
+    )
+    .toJSON();
 
-    expect(tree).toMatchSnapshot();
-  });
-  it(`FavoritesScreen with authorization is rendered correctly`, () => {
-    const store = createStore(rootReducer, initState);
-    const tree = renderer.create(
-        <Provider store={store}>
-          <BrowserRouter>
-            <FavoritesScreen favoriteOffers={offers}/>
-          </BrowserRouter>
-        </Provider>
-    ).toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
+  expect(tree).toMatchSnapshot();
 });

@@ -10,13 +10,15 @@ import classNames from "classnames";
 
 const OfferCardView = (props) => {
   const {images, isPremium, price, title, type, rating, id, isFavorite} = props.offer;
-  let {onMouseEnter, onMouseLeave, onToFavoriteClick = null} = props;
+  let {onMouseEnter, onMouseLeave, onToFavoriteClick} = props;
 
   const dispatch = useDispatch();
 
-  onToFavoriteClick = () => {
-    dispatch(toggleToFavorite(id, +!isFavorite));
-  };
+  if (!onToFavoriteClick) {
+    onToFavoriteClick = () => {
+      dispatch(toggleToFavorite(id, +!isFavorite));
+    };
+  }
 
   const setPremiumMark = () => {
     if (isPremium) {

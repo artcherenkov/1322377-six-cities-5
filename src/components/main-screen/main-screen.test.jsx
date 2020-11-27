@@ -5,7 +5,7 @@ import MainScreen from "./main-screen";
 import {Provider} from 'react-redux';
 import rootReducer from '../../store/reducers/root-reducer';
 import {createStore} from "redux";
-import {Cities, MapType, SortType} from "../../const";
+import {Cities, SortType} from "../../const";
 import Map from "../map/map";
 
 const offers = [

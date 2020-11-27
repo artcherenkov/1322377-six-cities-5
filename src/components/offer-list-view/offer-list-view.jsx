@@ -9,13 +9,15 @@ import {toggleToFavorite} from "../../store/api-action";
 
 const OfferListView = (props) => {
   const {images, price, title, type, rating, id, isFavorite} = props.offer;
-  let {onToFavoriteClick = null} = props;
+  let {onToFavoriteClick} = props;
 
   const dispatch = useDispatch();
 
-  onToFavoriteClick = () => {
-    dispatch(toggleToFavorite(id, +!isFavorite));
-  };
+  if (!onToFavoriteClick) {
+    onToFavoriteClick = () => {
+      dispatch(toggleToFavorite(id, +!isFavorite));
+    };
+  }
 
   return (
     <article className="favorites__card place-card">

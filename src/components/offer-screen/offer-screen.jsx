@@ -34,7 +34,7 @@ const getDataFromStore = ({activeOfferId}) => {
 
 const OfferScreen = React.memo(function OfferScreen(props) {
   const dispatch = useDispatch();
-  const offerId = props.match.params.id;
+  const offerId = props.id || props.match.params.id;
   const {offers, activeOffer, comments, isLoggedIn, username} = getDataFromStore({activeOfferId: offerId});
   const {images, isPremium, price, title, type, rating, bedrooms, maxAdults, goods, host, description} = activeOffer;
   dispatch(changeActiveOffer(``));
@@ -137,7 +137,8 @@ const OfferScreen = React.memo(function OfferScreen(props) {
 });
 
 OfferScreen.propTypes = {
-  match: PropTypes.any
+  match: PropTypes.any,
+  id: PropTypes.string,
 };
 
 export default OfferScreen;
